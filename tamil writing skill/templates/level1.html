@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 1 – Tamil Writing Skill Assessment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Exam Header -->
+    <div class="writing-exam-header">
+        <div class="exam-header-content">
+            <div class="exam-title">
+                <h1>தமிழ் எழுத்து திறன் மதிப்பீடு</h1>
+                <h2>Tamil Writing Skill Assessment</h2>
+            </div>
+            <div class="exam-info">
+                <div class="level-buttons">
+                    <a href="/level1" class="level-btn active">Level 1</a>
+                    <a href="/level2" class="level-btn">Level 2</a>
+                    <a href="/level3" class="level-btn">Level 3</a>
+                </div>
+                <div class="nav-icons">
+                    <a href="/" class="nav-icon" title="Dashboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="exam-container">
+
+        <!-- Result display (shown after submission) -->
+        {% if level_result %}
+        <div
+            style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; padding: 40px; margin-bottom: 30px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); text-align: center;">
+            <div
+                style="font-size: 0.85rem; font-weight: 600; color: #9333ea; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">
+                Level 1 Result</div>
+            <div
+                style="font-size: 3.5rem; font-weight: 700; color: {% if level_result.passed_threshold %}#16a34a{% else %}#dc2626{% endif %}; margin-bottom: 6px;">
+                {{ level_result.score }}
+                <span style="font-weight: 500; color: #888; font-size: 2rem;">/ 25</span>
+            </div>
+            <div style="font-size: 1rem; color: #666; margin-bottom: 20px;">Score</div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    {% if level_result.passed_threshold %}
+                    if (window.LevelManager) LevelManager.markLevelPassed(1);
+                    {% endif %}
+
+                    let existing = localStorage.getItem('writingResults');
+                    let results = existing ? JSON.parse(existing) : { level1: null, level2: null, level3: null };
+                    if (Array.isArray(results)) results = { level1: null, level2: null, level3: null };
+
+                    results.level1 = {
+                        level: 1,
+                        score: {{ level_result.score | tojson }},
+                            text: {{ level_result.student_answer | tojson }},
+                        feedback: {{ level_result.feedback | tojson }},
+                        detailed_evaluation: {{ level_result.detailed_evaluation | tojson }},
+                        question_text: {{ level_result.question_text | tojson }}
+                    };
+                localStorage.setItem('writingResults', JSON.stringify(results));
+
+                if (window.location.search.includes('fromFlow=1') || sessionStorage.getItem('fromAssessmentFlow') === 'true') {
+                    if (typeof window.assessmentFlowComplete === 'function') {
+                        window.assessmentFlowComplete(results);
+                    }
+                }
+                });
+            </script>
+
+            {% if level_result.passed_threshold %}
+            <div
+                style="background: #dcfce7; border: 1px solid #bbf7d0; border-radius: 10px; padding: 16px 24px; margin-bottom: 24px; color: #166534; font-weight: 600; font-size: 1.05rem;">
+                ✅ நீங்கள் Level 1 தேர்ச்சி பெற்றுள்ளீர்கள்! (Passed)
+            </div>
+            <a href="/level2" class="btn-primary"
+                style="display: inline-block; text-decoration: none; padding: 12px 24px;">Level 2 Unlocked → Try Level
+                2</a>
+            {% else %}
+            <div
+                style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 10px; padding: 16px 24px; margin-bottom: 24px; color: #991b1b; font-weight: 600; font-size: 1.05rem;">
+                ❌ நீங்கள் தேர்ச்சி பெறவில்லை. மீண்டும் முயற்சிக்கவும். (Failed)
+            </div>
+            <a href="/level1"
+                style="display: inline-block; padding: 12px 24px; color: #0a0a0a; text-decoration: none; border: 1px solid rgba(0,0,0,0.12); border-radius: 8px;">↩
+                Try again</a>
+            {% endif %}
+        </div>
+
+        <!-- Feedback Panel -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div
+            style="background: {% if category == 'success' %}#f0fdf4{% else %}#fef2f2{% endif %}; border: 1px solid {% if category == 'success' %}#bbf7d0{% else %}#fecaca{% endif %}; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+            <h3
+                style="font-size: 1rem; font-weight: 700; color: {% if category == 'success' %}#166534{% else %}#991b1b{% endif %}; margin-bottom: 12px;">
+                {% if category == 'success' %}✅ Evaluation Results{% else %}📋 Evaluation Details{% endif %}
+            </h3>
+            <pre
+                style="white-space: pre-wrap; font-family: inherit; font-size: 0.92rem; color: {% if category == 'success' %}#166534{% else %}#7f1d1d{% endif %}; line-height: 1.7; margin: 0;">{{ message }}</pre>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <!-- AI Teacher Section -->
+        <div
+            style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; padding: 32px; margin-bottom: 24px; box-shadow: 0 4px 24px rgba(0,0,0,0.06);">
+            <h3
+                style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: #0a0a0a; display: flex; align-items: center; gap: 8px;">
+                🤖 AI Teacher Feedback
+            </h3>
+            <div id="ai-feedback-content" style="color: #666; font-size: 0.95rem; line-height: 1.7;">
+                <p>Click <strong>Get AI Feedback</strong> to receive detailed teacher feedback on your answer.</p>
+            </div>
+            <button id="get-ai-feedback-btn" onclick="loadAIFeedback()"
+                style="margin-top: 16px; padding: 10px 20px; background: #9333ea; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: all 0.2s ease;"
+                onmouseover="this.style.background='#7c3aed'" onmouseout="this.style.background='#9333ea'">
+                Get AI Feedback
+            </button>
+        </div>
+
+        <script>
+            function loadAIFeedback() {
+                const btn = document.getElementById('get-ai-feedback-btn');
+                const content = document.getElementById('ai-feedback-content');
+                btn.disabled = true;
+                btn.textContent = 'Loading…';
+
+                const stored = localStorage.getItem('writingResults');
+                if (!stored) {
+                    content.innerHTML = '<p style="color:#991b1b;">No results found. Please submit your answer first.</p>';
+                    btn.disabled = false;
+                    btn.textContent = 'Get AI Feedback';
+                    return;
+                }
+
+                const results = JSON.parse(stored);
+                const r = results.level1;
+                if (!r) {
+                    content.innerHTML = '<p style="color:#991b1b;">No Level 1 result found.</p>';
+                    btn.disabled = false;
+                    btn.textContent = 'Get AI Feedback';
+                    return;
+                }
+
+                fetch('/api/ai_feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        level: 1,
+                        score: r.score,
+                        max_score: 25,
+                        question: r.question_text,
+                        student_answer: r.text,
+                        feedback: r.feedback,
+                        detailed_evaluation: r.detailed_evaluation
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.feedback) {
+                            content.innerHTML = '<div style="white-space: pre-wrap; line-height: 1.8; font-size: 0.95rem; color: #1a1a1a;">' + data.feedback.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
+                        } else {
+                            content.innerHTML = '<p style="color:#991b1b;">Could not get feedback: ' + (data.error || 'Unknown error') + '</p>';
+                        }
+                        btn.textContent = 'Refresh Feedback';
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        content.innerHTML = '<p style="color:#991b1b;">Error: ' + err + '</p>';
+                        btn.disabled = false;
+                        btn.textContent = 'Get AI Feedback';
+                    });
+            }
+        </script>
+        {% endif %}
+
+        <!-- Question + Answer Form -->
+        <div class="question-card">
+            <span class="question-label">Level 1 — Basic</span>
+            <h2 style="font-size: 1.4rem; font-weight: 700; color: #0a0a0a; margin-bottom: 16px; line-height: 1.4;">
+                உங்களைப் பற்றி எழுதுங்கள்
+                <span style="display: block; font-size: 1rem; font-weight: 400; color: #666; margin-top: 6px;">Write
+                    about yourself — your name, age, family, interests, hobbies and goals.</span>
+            </h2>
+
+            <form method="POST" id="level1-form">
+                <div style="margin-bottom: 16px;">
+                    <label for="answer"
+                        style="display: block; font-size: 0.9rem; font-weight: 600; color: #444; margin-bottom: 8px;">உங்கள்
+                        பதில் / Your Answer</label>
+                    <textarea id="answer" name="answer" rows="10"
+                        placeholder="உங்களைப் பற்றி இங்கே எழுதுங்கள்… (Write about yourself here…)"
+                        style="width: 100%; padding: 16px; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; font-size: 1.1rem; line-height: 1.7; resize: vertical; background: #fcfcfc; font-family: 'Mukta Malar', 'Inter', sans-serif; min-height: 200px;"
+                        required></textarea>
+                </div>
+
+                <!-- Tamil Virtual Keyboard toggle -->
+                <div style="margin-bottom: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <button type="button" id="keyboard-toggle-btn" onclick="toggleTamilKeyboard()"
+                        style="padding: 8px 16px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; background: #f8f9fa; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: #444; transition: all 0.2s;">
+                        ⌨️ Tamil Keyboard
+                    </button>
+                    <span style="font-size: 0.8rem; color: #888;">Type Tamil using the virtual keyboard</span>
+                </div>
+
+                <!-- Tamil keyboard container -->
+                <div id="tamil-keyboard-container" style="display: none; margin-bottom: 16px;"></div>
+
+                <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                    <button type="submit" class="btn-primary" id="submit-btn">
+                        Submit Answer →
+                    </button>
+                    <span style="font-size: 0.85rem; color: #888;">Minimum 5 words required</span>
+                </div>
+            </form>
+        </div>
+
+        <!-- Flash messages (errors on GET) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages and not level_result %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            <pre style="white-space: pre-wrap; font-family: inherit; margin: 0;">{{ message }}</pre>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/unlock.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tamil-keyboard.js') }}"></script>
+    <script>
+        function toggleTamilKeyboard() {
+            const container = document.getElementById('tamil-keyboard-container');
+            const isVisible = container.style.display !== 'none';
+            if (isVisible) {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'block';
+                if (typeof initTamilKeyboard === 'function') {
+                    initTamilKeyboard('tamil-keyboard-container', 'answer');
+                }
+            }
+        }
+
+        document.getElementById('level1-form').addEventListener('submit', function () {
+            const btn = document.getElementById('submit-btn');
+            btn.textContent = 'Evaluating…';
+            btn.disabled = true;
+        });
+    </script>
+</body>
+
+</html>

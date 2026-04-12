@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing Assessment Rules | எழுத்து மதிப்பீடு வழிமுறைகள்</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #fafbfc;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
+    }
+
+    .flow-container {
+      width: 100%;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 160px 40px 100px;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      background: #fafbfc;
+    }
+
+    .rules-card {
+      width: 100%;
+      max-width: 1200px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: 0 auto;
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rules-title {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: #0a0a0a;
+      margin: 0 auto 80px auto;
+      text-align: center;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      position: relative;
+      padding: 0;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .rules-title::after {
+      content: '';
+      position: absolute;
+      bottom: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #0a0a0a, transparent);
+    }
+
+    .rules-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto 80px auto;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .rules-list li {
+      font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+      color: #1a1a1a;
+      line-height: 1.85;
+      margin-bottom: 24px;
+      padding: 32px 40px 32px 72px;
+      position: relative;
+      font-weight: 400;
+      text-align: left;
+      width: 100%;
+      max-width: 100%;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.02);
+    }
+
+    .rules-list li:hover {
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+      transform: translateY(-2px);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .rules-list li:last-child { margin-bottom: 0; }
+
+    .rules-list li::before {
+      content: '';
+      position: absolute;
+      left: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: #0a0a0a;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(10, 10, 10, 0.08);
+    }
+
+    .rule-item-wrapper { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+    .rule-english { color: #0a0a0a; line-height: 1.8; font-weight: 500; text-align: left; width: 100%; letter-spacing: -0.015em; font-size: 1em; }
+    .rule-tamil { color: #4a5568; line-height: 1.8; font-family: 'Noto Sans Tamil', 'Arial Unicode MS', sans-serif; font-size: 0.95em; text-align: left; font-weight: 400; width: 100%; letter-spacing: -0.01em; margin-top: 4px; }
+
+    .start-test-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 56px;
+      background: #0a0a0a;
+      border: 1px solid #0a0a0a;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 1.15rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      justify-content: center;
+      letter-spacing: -0.02em;
+    }
+
+    .start-test-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .start-test-btn:hover::before { left: 100%; }
+    .start-test-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+    }
+
+    .start-test-btn svg { transition: transform 0.3s ease; position: relative; z-index: 1; color: #ffffff; width: 20px; height: 20px; }
+    .start-test-btn:hover svg { transform: translateX(4px); }
+    .btn-text { position: relative; z-index: 1; }
+
+    .back-button {
+      position: fixed;
+      top: 110px;
+      left: 30px;
+      width: 52px;
+      height: 52px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    .back-button:hover {
+      transform: translateY(-2px);
+      background: #f8f9fa;
+      border-color: rgba(0, 0, 0, 0.12);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-button svg { width: 24px; height: 24px; }
+
+    @media (max-width: 768px) {
+      .flow-container { padding: 120px 16px 60px; }
+      .rules-title { margin-bottom: 40px; }
+      .rules-title::after { width: 60px; bottom: -16px; }
+      .rules-list { margin: 0 auto 50px auto; padding: 0 16px; }
+      .rules-list li { margin-bottom: 24px; padding: 20px 20px 20px 44px; }
+      .rules-list li::before { left: 14px; top: 20px; }
+      .start-test-btn { width: calc(100% - 32px); padding: 16px 28px; font-size: 1rem; }
+      .back-button { top: 100px; left: 20px; width: 46px; height: 46px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#" class="back-button" onclick="history.back(); return false;" title="Back to Previous Page">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+  </a>
+
+  <div class="flow-container">
+    <div class="rules-card">
+      <h2 class="rules-title">Writing Assessment Rules | எழுத்து மதிப்பீடு வழிமுறைகள்</h2>
+      <ul class="rules-list" id="rulesList">
+        <li>
+          <div class="rule-item-wrapper">
+            <div class="rule-english">Write your answers in Tamil. You can use Google Input Tools or the Tamil keyboard.</div>
+            <div class="rule-tamil">தமிழில் பதில்களை எழுதுங்கள். Google Input Tools அல்லது தமிழ் விசைப்பலகையைப் பயன்படுத்தலாம்.</div>
+          </div>
+        </li>
+        <li>
+          <div class="rule-item-wrapper">
+            <div class="rule-english">Answer in complete sentences. Take your time to think before submitting.</div>
+            <div class="rule-tamil">முழுமையான வாக்கியங்களில் பதிலளிக்கவும். சமர்ப்பிப்பதற்கு முன் சிந்திக்க நேரம் எடுத்துக் கொள்ளுங்கள்.</div>
+          </div>
+        </li>
+        <li>
+          <div class="rule-item-wrapper">
+            <div class="rule-english">Each question will be evaluated on multiple criteria. Review your answers before submitting.</div>
+            <div class="rule-tamil">ஒவ்வொரு கேள்வியும் பல அளவுகோல்களின் அடிப்படையில் மதிப்பீடு செய்யப்படும். சமர்ப்பிப்பதற்கு முன் உங்கள் பதில்களை மீண்டும் பார்வையிடுங்கள்.</div>
+          </div>
+        </li>
+      </ul>
+      <a href="http://127.0.0.1:5002?fromFlow=1" id="startWritingBtn" class="start-test-btn">
+        <span class="btn-text">Start Writing Test</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('startWritingBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      try {
+        sessionStorage.setItem('readingCompleted', 'true');
+      } catch (err) {}
+      window.location.href = 'http://127.0.0.1:5002?fromFlow=1';
+    });
+  </script>
+</body>
+</html>

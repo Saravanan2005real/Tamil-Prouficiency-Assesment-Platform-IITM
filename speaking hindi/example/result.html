@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="result">
+    <div class="exam-header">
+        <div class="exam-header-content">
+            <div class="exam-title">
+                <h1>தமிழ் வாசிப்பு திறன் மதிப்பீடு</h1>
+                <h2>Results</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="exam-container">
+        <div class="content-section" id="results-section">
+            <div class="section-header">
+                <h2>Final Score</h2>
+            </div>
+            <div class="results-container show" id="final-results-container">
+                <div class="results-header simple">
+                    <div class="result-status" id="result-status-text">--</div>
+                    <div class="result-marks" id="result-marks-text">0/0</div>
+                </div>
+                <div style="margin-top: 10px; font-size: 1.1em;">
+                    <div id="result-percentage"></div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button class="btn-primary" onclick="restartExam()">Restart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passage 1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="passage" data-target="0" data-next="/page2">
+    <div class="exam-header">
+        <div class="exam-header-content">
+            <div class="exam-title">
+                <h1>தமிழ் வாசிப்பு திறன் மதிப்பீடு</h1>
+                <h2>Passage 1</h2>
+                <div id="passage-progress" style="font-size: 14px; color: #dee2e6; margin-top: 6px;"></div>
+            </div>
+            <div class="exam-info">
+                <div class="info-item">
+                    <span class="info-label">Time:</span>
+                    <span class="info-value" id="timer">00:00:00</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Questions:</span>
+                    <span class="info-value" id="question-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Total Marks:</span>
+                    <span class="info-value" id="total-marks">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Score:</span>
+                    <span class="info-value" id="score-banner">0/0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="exam-container">
+        <div class="content-section" id="paragraph-section">
+            <div class="section-header">
+                <h2>பகுதி / Passage</h2>
+                <div id="passage-label" class="lang-label" style="background:#1e3c72; color:#fff;"></div>
+            </div>
+            <div class="paragraph-container">
+                <div class="paragraph-box">
+                    <div class="lang-label">தமிழ் (Tamil)</div>
+                    <p id="paragraph-tamil" class="paragraph-text"></p>
+                </div>
+                <div class="paragraph-box">
+                    <div class="lang-label">English</div>
+                    <p id="paragraph-english" class="paragraph-text"></p>
+                </div>
+            </div>
+            <div class="section-footer">
+                <span id="passage-progress-inline"></span>
+            </div>
+        </div>
+
+        <div class="content-section" id="questions-section" style="display: block;">
+            <div class="questions-container" id="questions-container"></div>
+            <div class="section-footer" id="questions-footer">
+                <button class="btn-primary" id="next-passage-btn" onclick="goToNextPassage()">Next Passage →</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="tamil-keyboard.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+

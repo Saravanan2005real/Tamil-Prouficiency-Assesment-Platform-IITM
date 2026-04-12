@@ -1,0 +1,262 @@
+/* Back Button - Premium Minimalist */
+.back-button {
+    position: fixed;
+    top: 110px;
+    left: 30px;
+    width: 52px;
+    height: 52px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    transform: translateY(-2px);
+    background: #f8f9fa;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button svg {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.back-button:hover svg {
+    transform: scale(1.1);
+}
+
+/* Level Selection Container - Premium Minimalist */
+.level-selection-container {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 120px 60px 80px;
+    position: relative;
+    z-index: 10;
+    animation: fadeInUp 0.8s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: #ffffff;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.level-selection-content {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.level-selection-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: -0.05em;
+}
+
+.level-selection-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: #666666;
+    text-align: center;
+    margin-bottom: 60px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.level-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.level-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 40px 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+.level-card-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.level-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+}
+
+.basic-badge {
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid rgba(25, 118, 210, 0.2);
+}
+
+.intermediate-badge {
+    background: #fff3e0;
+    color: #f57c00;
+    border: 1px solid rgba(245, 124, 0, 0.2);
+}
+
+.advanced-badge {
+    background: #f3e5f5;
+    color: #7b1fa2;
+    border: 1px solid rgba(123, 31, 162, 0.2);
+}
+
+.level-name {
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.level-assessments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+    justify-content: center;
+}
+
+.assessment-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    background: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #4a4a4a;
+}
+
+.assessment-name {
+    font-weight: 500;
+}
+
+.level-description {
+    font-size: 1rem;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.select-level-btn {
+    width: 100%;
+    padding: 14px 24px;
+    background: #000000;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+.select-level-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    background: #1a1a1a;
+}
+
+.select-level-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .back-button {
+        top: 100px;
+        left: 20px;
+        width: 46px;
+        height: 46px;
+    }
+
+    .level-selection-container {
+        padding: 100px 20px 60px;
+    }
+
+    .level-cards {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .level-card {
+        padding: 30px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .level-selection-title {
+        font-size: 2rem;
+    }
+
+    .level-selection-subtitle {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+
+    .level-card {
+        padding: 24px 20px;
+    }
+
+    .level-assessments {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .assessment-item {
+        justify-content: center;
+    }
+}
+

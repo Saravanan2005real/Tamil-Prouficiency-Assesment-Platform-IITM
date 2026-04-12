@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+hypercorn
+openai-whisper
+torch
+python-multipart
+numpy
+pydantic
+python-dotenv
+imageio-ffmpeg
+edge-tts
+requests
+gtts
+aiohttp
+
+

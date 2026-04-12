@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Flowchart - Tamil Reading Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+        
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .step {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .step::before {
+            content: '';
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #dee2e6;
+        }
+        
+        .step:first-child::before {
+            display: none;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .step-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .step-module {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .step-details {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .step-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .step-details li {
+            padding: 5px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .step-details li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .step-output {
+            background: #e7f3ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #667eea;
+            margin: -10px 0;
+        }
+        
+        .formula-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .decision-box {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .weights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .weight-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .weight-label {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        
+        .weight-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Evaluation Flowchart</h1>
+        <p class="subtitle">Tamil Reading Assessment - Complete Evaluation Pipeline</p>
+        
+        <div class="flowchart">
+            <!-- Step 0: User Input -->
+            <div class="step">
+                <div class="step-number">0</div>
+                <div class="step-title">User Submits Answer</div>
+                <div class="step-module">Website Frontend</div>
+                <div class="step-details">
+                    <ul>
+                        <li>User types answer in Tamil</li>
+                        <li>Clicks "Evaluate" button</li>
+                        <li>Answer sent to backend API</li>
+                    </ul>
+                </div>
+                <div class="step-output">
+                    <strong>Input:</strong> {questionNumber, userAnswer}
+                </div>
+            </div>
+            
+            <div class="arrow">⬇</div>
+            
+            <!-- Step 1: Normalization -->
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">Normalization</div>
+                <div class="step-module">tamil_normalizer.normalize()</div>
+                <div class="step-details">
+                    <ul>
+                        <li>Unicode normalization (NFC)</li>
+                        <li>Remove punctuation</li>
+                        <li>Apply normalization map (variants → standard)</li>
+                        <li>Remove extra spaces</li>
+                    </ul>
+                </div>
+                <div class="step-output">
+                    <strong>Output:</strong> Normalized text (cleaned and standardized)
+                </div>
+            </div>
+            
+            <div class="arrow">⬇</div>
+            
+            <!-- Step 2: Semantic Similarity -->
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">Semantic Similarity</div>
+                <div class="step-module">tamil_semantic_engine.find_best_match()</div>
+                <div class="step-details">
+                    <ul>
+                        <li>Load multilingual embedding model</li>
+                        <li>Encode user answer → embedding vector</li>
+                        <li>Encode expected answers → embedding vectors</li>
+                        <li>Compute cosine similarity for each pair</li>
+                        <li>Find best match (highest similarity)</li>
+                    </ul>
+                </div>
+                <div class="step-output">
+                    <strong>Output:</strong> semantic_score (0-1), best_match
+                </div>
+                <div class="formula-box">
+                    <strong>Weight:</strong> <span class="weight-value">40%</span> of final score
+                </div>
+            </div>
+            
+            <div class="arrow">⬇</div>
+            
+            <!-- Step 3: Concept & Logic Validation -->
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">Concept & Logic Validation</div>
+                <div class="step-module">tamil_concept_validator.validate()</div>
+                <div class="step-details">
+                    <strong>3A: Concept Validation</strong>
+                    <ul>
+                        <li>Check required subject keywords</li>
+                        <li>Check required action keywords</li>
+                        <li>Check required object keywords</li>
+                        <li>Check problem/time context (if needed)</li>
+                    </ul>
+                    <strong>3B: Logic Validation</strong>
+                    <ul>
+                        <li>Check for negation words</li>
+                        <li>Validate if negation is allowed</li>
+                        <li>Special check for Q5: detect wrong positive form</li>
+                    </ul>
+                </div>
+                <div class="step-output">
+                    <strong>Output:</strong> concept_score (0-1), logic_score (0 or 1)
+                </div>
+                <div class="formula-box">
+                    <strong>Combined Weight:</strong> <span class="weight-value">30%</span> of final score<br>
+                    Formula: concept_score × 0.7 + logic_score × 0.3
+                </div>
+            </div>
+            
+            <div class="arrow">⬇</div>
+            
+            <!-- Step 4: Core Alignment -->
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-title">Core Alignment</div>
+                <div class="step-module">tamil_core_alignment.compute_best_alignment()</div>
+                <div class="step-details">
+                    <ul>
+                        <li>Extract concepts from user answer (subject, action, object, etc.)</li>
+                        <li>Extract concepts from expected answers</li>
+                        <li>Compare concept sets</li>
+                        <li>Compute alignment score (matched concepts / total)</li>
+                    </ul>
+                </div>
+                <div class="step-output">
+                    <strong>Output:</strong> alignment_score (0-1)
+                </div>
+                <div class="formula-box">
+                    <strong>Weight:</strong> <span class="weight-value">20%</span> of final score
+                </div>
+            </div>
+            
+            <div class="arrow">⬇</div>
+            
+            <!-- Step 5: Contradiction Detection -->
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-title">Contradiction Detection</div>
+                <div class="step-module">tamil_contradiction_detector.check_best_contradiction()</div>
+                <div class="step-details">
+                    <ul>
+                        <li>Check contradiction word pairs</li>
+                        <li>Compare user answer with expected answers</li>
+                        <li>If contradiction found → score = 0.0</li>
+                        <li>If no contradiction → score = 1.0</li>
+                    </ul>
+                </div>
+                <div class="step-output">
+                    <strong>Output:</strong> contradiction_score (0 or 1)
+                </div>
+                <div class="formula-box">
+                    <strong>Role:</strong> Multiplier (if 0, entire score becomes 0)
+                </div>
+            </div>
+            
+            <div class="arrow">⬇</div>
+            
+            <!-- Step 6: Final Scoring -->
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-title">Final Scoring</div>
+                <div class="step-module">tamil_final_scorer.evaluate()</div>
+                <div class="formula-box">
+                    <div class="formula">
+                        <strong>Weighted Sum:</strong><br>
+                        0.40 × semantic_score +<br>
+                        0.30 × logic_score +<br>
+                        0.20 × alignment_score
+                    </div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula">
+                        <strong>Final Score:</strong><br>
+                        weighted_sum × contradiction_score
+                    </div>
+                </div>
+                <div class="decision-box">
+                    <strong>Decision Threshold: 70% (0.70)</strong><br><br>
+                    <strong>IF</strong> final_score >= 0.70:<br>
+                    &nbsp;&nbsp;→ marks = max_marks (FULL MARKS)<br>
+                    &nbsp;&nbsp;→ passed = True<br><br>
+                    <strong>ELSE:</strong><br>
+                    &nbsp;&nbsp;→ marks = 0 (ZERO MARKS)<br>
+                    &nbsp;&nbsp;→ passed = False
+                </div>
+                <div class="step-output">
+                    <strong>Output:</strong> final_score, marks, passed
+                </div>
+            </div>
+            
+            <div class="arrow">⬇</div>
+            
+            <!-- Step 7: Return Results -->
+            <div class="step">
+                <div class="step-number">7</div>
+                <div class="step-title">Return Results to Frontend</div>
+                <div class="step-module">JSON Response</div>
+                <div class="step-details">
+                    <ul>
+                        <li>All 5 individual scores (as percentages)</li>
+                        <li>Final score and marks</li>
+                        <li>Pass/Fail status</li>
+                        <li>Best match from expected answers</li>
+                    </ul>
+                </div>
+                <div class="step-output">
+                    <strong>Output:</strong> Complete evaluation results
+                </div>
+            </div>
+            
+            <div class="arrow">⬇</div>
+            
+            <!-- Step 8: Display -->
+            <div class="step">
+                <div class="step-number">8</div>
+                <div class="step-title">Display Results on Website</div>
+                <div class="step-module">Frontend Display</div>
+                <div class="step-details">
+                    <ul>
+                        <li>Show Pass/Fail status (Correct/Incorrect)</li>
+                        <li>Show marks (X/MAX)</li>
+                        <li>Show all 5 scores with progress bars</li>
+                        <li>Show best match</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h2 style="color: #667eea; margin-bottom: 15px;">Score Weight Distribution</h2>
+            <div class="weights-grid">
+                <div class="weight-item">
+                    <div class="weight-label">Semantic Similarity</div>
+                    <div class="weight-value">40%</div>
+                </div>
+                <div class="weight-item">
+                    <div class="weight-label">Logic Validation</div>
+                    <div class="weight-value">30%</div>
+                </div>
+                <div class="weight-item">
+                    <div class="weight-label">Core Alignment</div>
+                    <div class="weight-value">20%</div>
+                </div>
+                <div class="weight-item">
+                    <div class="weight-label">Contradiction</div>
+                    <div class="weight-value">Multiplier</div>
+                </div>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 5px;">
+                <strong>Note:</strong> Concept Score is part of Logic Validation (70% concept + 30% logic = 30% of final)
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

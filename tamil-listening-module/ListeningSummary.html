@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listening Summary - Tamil Listening Test</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- External Libraries for AI Assessment Analysis -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+    integrity="sha512-BNaRQnY9KRC8tX3fLx0o0K9w2v/YvI8p6N0sMvB4A9X4U3N0f8l5J4iX4o3X4w2vYvI8p6N0sMvB4A9X4U=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Custom AI Teacher Agent -->
+  <script src="teacher-agent.js"></script>
+
+  <style>
+    /* AI Teacher Styling for Listening Module */
+    .ai-report-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-top: 20px;
+      border: 2px solid #0d6efd;
+      box-shadow: 0 4px 15px rgba(13, 110, 253, 0.1);
+    }
+
+    .ai-report-content {
+      line-height: 1.7;
+      color: #334155;
+    }
+
+    .ai-report-content h2,
+    .ai-report-content h3 {
+      color: #1e293b;
+      margin-top: 20px;
+    }
+
+    .loading-ai {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .spinner-ai {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #0d6efd;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .report-actions {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .summary-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .summary-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid #198754;
+    }
+
+    .summary-header h1 {
+      color: #212529;
+      margin-bottom: 10px;
+      font-size: 2em;
+    }
+
+    .summary-header h2 {
+      color: #6c757d;
+      font-size: 1.2em;
+      font-weight: normal;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .metric-card {
+      background: #f8f9fa;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .metric-card.accuracy {
+      border-color: #0d6efd;
+      background: #e7f1ff;
+    }
+
+    .metric-card.precision {
+      border-color: #ffc107;
+      background: #fff3cd;
+    }
+
+    .metric-card.relevance {
+      border-color: #198754;
+      background: #d1e7dd;
+    }
+
+    .metric-card.final-score {
+      border-color: #6f42c1;
+      background: #e2d9f3;
+      grid-column: 1 / -1;
+    }
+
+    .metric-label {
+      font-size: 0.9em;
+      color: #6c757d;
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .metric-value {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #212529;
+      margin: 10px 0;
+    }
+
+    .metric-value.has-value {
+      color: #198754;
+    }
+
+    .metric-value.no-value {
+      color: #6c757d;
+      font-size: 1.5em;
+    }
+
+    .metric-unit {
+      font-size: 0.6em;
+      color: #6c757d;
+      font-weight: normal;
+    }
+
+    .final-score-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+    }
+
+    .final-score-card .metric-label {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .final-score-card .metric-value {
+      color: white;
+      font-size: 3em;
+    }
+
+    .final-score-card .metric-unit {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .summary-actions {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #dee2e6;
+    }
+
+    .btn-summary {
+      display: inline-block;
+      padding: 12px 30px;
+      margin: 0 10px;
+      background: #198754;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-summary:hover {
+      background: #157347;
+    }
+
+    .btn-summary.secondary {
+      background: #6c757d;
+    }
+
+    .btn-summary.secondary:hover {
+      background: #5c636a;
+    }
+
+    .loading-message {
+      text-align: center;
+      padding: 40px;
+      color: #6c757d;
+      font-size: 1.1em;
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 40px;
+      color: #dc3545;
+      background: #f8d7da;
+      border: 2px solid #dc3545;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .charts-section {
+      margin: 40px 0;
+      padding: 30px 0;
+      border-top: 2px solid #dee2e6;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .chart-container {
+      background: #ffffff;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .chart-title {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #212529;
+      margin-bottom: 15px;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 300px;
+      margin: 0 auto;
+    }
+
+    .level-section {
+      margin: 40px 0;
+      padding: 40px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .level-text {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 15px 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      line-height: 1.4;
+    }
+
+    .score-text {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 15px 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+
+<body data-page="summary">
+  <!-- HEADER -->
+  <div class="exam-header">
+    <div class="exam-header-content">
+      <div class="exam-title">
+        <h1>தமிழ் கேள்வி தேர்வு</h1>
+        <h2>Tamil Listening Assessment</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="exam-container">
+    <div class="summary-container">
+      <div class="summary-header">
+        <h1>Listening Performance Summary</h1>
+        <h2>கேட்டல் செயல்திறன் சுருக்கம்</h2>
+      </div>
+
+      <div id="summary-content">
+        <div class="loading-message">Loading summary data...</div>
+      </div>
+
+      <div id="charts-section" class="charts-section" style="display: none;">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #212529;">Performance Breakdown</h2>
+        <div class="charts-grid" id="charts-grid"></div>
+      </div>
+
+      <!-- AI Teacher Analysis Section -->
+      <div id="aiTeacherSection"
+        style="margin-top: 40px; text-align: center; border-top: 2px dashed rgba(13, 110, 253, 0.2); padding-top: 40px;">
+        <div style="font-size: 3rem; margin-bottom: 15px;">👨‍🏫</div>
+        <h2 style="font-size: 1.8rem; margin-bottom: 5px; color: #1a1a1a;">Detailed AI Teacher Report</h2>
+        <div id="aiReportContainer" style="text-align: left; margin-top: 20px;">
+          <div class="ai-report-card">
+            <div class="loading-ai">
+              <div class="spinner-ai"></div>
+              <p>Our Teacher Agent is reviewing your performance in detail...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="level-section" class="level-section" style="display: none;">
+        <div class="level-text" id="level-text"></div>
+        <div class="score-text" id="score-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get evaluation data from localStorage or URL parameters
+    function getEvaluationData() {
+      // Try localStorage first (set by main page after evaluation)
+      const storedData = localStorage.getItem('lastEvaluationResult');
+      if (storedData) {
+        try {
+          return JSON.parse(storedData);
+        } catch (e) {
+          console.error('Error parsing stored evaluation data:', e);
+        }
+      }
+
+      // Try URL parameters as fallback
+      const urlParams = new URLSearchParams(window.location.search);
+      const dataParam = urlParams.get('data');
+      if (dataParam) {
+        try {
+          return JSON.parse(decodeURIComponent(dataParam));
+        } catch (e) {
+          console.error('Error parsing URL parameter data:', e);
+        }
+      }
+
+      return null;
+    }
+
+    // Derive Overall Listening Level from final_listening_score
+    function getListeningLevel(score) {
+      if (score === null || score === undefined) {
+        return { level: 'N/A', description: 'Score not available' };
+      }
+
+      const numScore = typeof score === 'number' ? score : parseFloat(score);
+
+      if (numScore < 40) {
+        return {
+          level: 'Beginner',
+          description: 'You are at the beginner level. Keep practicing to improve your listening skills!'
+        };
+      } else if (numScore >= 40 && numScore < 60) {
+        return {
+          level: 'Elementary',
+          description: 'You are at the elementary level. Continue building your listening comprehension.'
+        };
+      } else if (numScore >= 60 && numScore < 75) {
+        return {
+          level: 'Intermediate',
+          description: 'You are at the intermediate level. Good progress! Keep working on advanced listening skills.'
+        };
+      } else if (numScore >= 75 && numScore < 90) {
+        return {
+          level: 'Upper Intermediate',
+          description: 'You are at the upper intermediate level. Excellent listening skills!'
+        };
+      } else {
+        return {
+          level: 'Advanced',
+          description: 'You are at the advanced level. Outstanding listening comprehension!'
+        };
+      }
+    }
+
+    // Create pie chart
+    function createPieChart(canvasId, title, value, valueLabel, complementLabel, colors) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return null;
+
+      // Handle null/undefined values
+      let percentage = 0;
+      if (value !== null && value !== undefined) {
+        percentage = typeof value === 'number' ? (value <= 1 ? value * 100 : value) : 0;
+      }
+
+      const complement = 100 - percentage;
+
+      // Default colors if not provided
+      const defaultColors = {
+        positive: '#198754', // Green
+        negative: '#dc3545'  // Red
+      };
+
+      const chartColors = colors || defaultColors;
+
+      const chart = new Chart(canvas, {
+        type: 'pie',
+        data: {
+          labels: [valueLabel, complementLabel],
+          datasets: [{
+            data: [percentage, complement],
+            backgroundColor: [
+              chartColors.positive,
+              chartColors.negative
+            ],
+            borderColor: [
+              '#ffffff',
+              '#ffffff'
+            ],
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: title,
+              font: {
+                size: 18,
+                weight: 'bold'
+              },
+              padding: {
+                top: 10,
+                bottom: 25
+              },
+              color: '#212529'
+            },
+            legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                padding: 15,
+                font: {
+                  size: 13,
+                  weight: '500'
+                },
+                generateLabels: function (chart) {
+                  const data = chart.data;
+                  if (data.labels.length && data.datasets.length) {
+                    const dataset = data.datasets[0];
+                    return data.labels.map((label, i) => {
+                      const value = dataset.data[i];
+                      const total = dataset.data.reduce((a, b) => a + b, 0);
+                      const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+                      return {
+                        text: `${label}: ${percentage}%`,
+                        fillStyle: dataset.backgroundColor[i],
+                        strokeStyle: dataset.borderColor[i],
+                        lineWidth: dataset.borderWidth,
+                        hidden: false,
+                        index: i
+                      };
+                    });
+                  }
+                  return [];
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const label = context.label || '';
+                  const value = context.parsed || 0;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+                  return `${label}: ${percentage}%`;
+                }
+              }
+            }
+          }
+        },
+        plugins: [{
+          id: 'percentageLabels',
+          afterDraw: (chart) => {
+            const ctx = chart.ctx;
+            chart.data.datasets.forEach((dataset, i) => {
+              const meta = chart.getDatasetMeta(i);
+              meta.data.forEach((element, index) => {
+                const value = dataset.data[index];
+                const total = dataset.data.reduce((a, b) => a + b, 0);
+                const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+
+                // Only show label if segment is large enough (> 5%)
+                if (percentage > 5) {
+                  ctx.save();
+                  ctx.fillStyle = '#ffffff';
+                  ctx.font = 'bold 16px Arial';
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'middle';
+
+                  const position = element.tooltipPosition();
+                  ctx.fillText(percentage + '%', position.x, position.y);
+                  ctx.restore();
+                }
+              });
+            });
+          }
+        }]
+      });
+
+      return chart;
+    }
+
+    // Display summary metrics
+    function displaySummary(data) {
+      const contentDiv = document.getElementById('summary-content');
+      const chartsSection = document.getElementById('charts-section');
+      const chartsGrid = document.getElementById('charts-grid');
+
+      if (!data) {
+        contentDiv.innerHTML = `
+            <div class="error-message">
+              <strong>No evaluation data available</strong><br>
+              Please complete an evaluation first.
+            </div>
+            <div class="summary-actions">
+              <a href="index.html" class="btn-summary">Go to Test</a>
+            </div>
+          `;
+        chartsSection.style.display = 'none';
+        return;
+      }
+
+      // Extract metrics
+      const overallAccuracy = data.overall_accuracy;
+      const overallPrecision = data.overall_precision;
+      const overallAnswerRelevance = data.overall_answer_relevance;
+      const finalListeningScore = data.final_listening_score;
+
+      // Format metric value
+      function formatMetric(value) {
+        if (value === null || value === undefined) {
+          return { display: 'N/A', hasValue: false };
+        }
+        if (typeof value === 'number') {
+          return { display: value.toFixed(2), hasValue: true };
+        }
+        return { display: String(value), hasValue: true };
+      }
+
+      // Format percentage
+      function formatPercentage(value) {
+        if (value === null || value === undefined) {
+          return { display: 'N/A', hasValue: false };
+        }
+        if (typeof value === 'number') {
+          // If value is 0-1, convert to percentage; if already 0-100, use as-is
+          const percentage = value <= 1 ? (value * 100).toFixed(2) : value.toFixed(2);
+          return { display: percentage, hasValue: true };
+        }
+        return { display: String(value), hasValue: true };
+      }
+
+      const accuracyMetric = formatPercentage(overallAccuracy);
+      const precisionMetric = formatPercentage(overallPrecision);
+      const relevanceMetric = formatPercentage(overallAnswerRelevance);
+      const finalScoreMetric = formatPercentage(finalListeningScore);
+
+      // Build HTML
+      contentDiv.innerHTML = `
+        <div class="metrics-grid">
+          <div class="metric-card accuracy">
+            <div class="metric-label">Overall Accuracy</div>
+            <div class="metric-value ${accuracyMetric.hasValue ? 'has-value' : 'no-value'}">
+              ${accuracyMetric.display}
+              ${accuracyMetric.hasValue ? '<span class="metric-unit">%</span>' : ''}
+            </div>
+            <div style="font-size: 0.85em; color: #6c757d; margin-top: 8px;">
+              Mean of all accuracy values
+            </div>
+          </div>
+          
+          <div class="metric-card precision">
+            <div class="metric-label">Overall Precision</div>
+            <div class="metric-value ${precisionMetric.hasValue ? 'has-value' : 'no-value'}">
+              ${precisionMetric.display}
+              ${precisionMetric.hasValue ? '<span class="metric-unit">%</span>' : ''}
+            </div>
+            <div style="font-size: 0.85em; color: #6c757d; margin-top: 8px;">
+              Mean of all precision values
+            </div>
+          </div>
+          
+          <div class="metric-card relevance">
+            <div class="metric-label">Overall Answer Relevance</div>
+            <div class="metric-value ${relevanceMetric.hasValue ? 'has-value' : 'no-value'}">
+              ${relevanceMetric.display}
+              ${relevanceMetric.hasValue ? '<span class="metric-unit">%</span>' : ''}
+            </div>
+            <div style="font-size: 0.85em; color: #6c757d; margin-top: 8px;">
+              Mean of all relevance scores
+            </div>
+          </div>
+          
+          <div class="metric-card final-score final-score-card">
+            <div class="metric-label">Final Listening Score</div>
+            <div class="metric-value ${finalScoreMetric.hasValue ? 'has-value' : 'no-value'}">
+              ${finalScoreMetric.display}
+              ${finalScoreMetric.hasValue ? '<span class="metric-unit">%</span>' : ''}
+            </div>
+            <div style="font-size: 0.9em; color: rgba(255, 255, 255, 0.9); margin-top: 12px; font-weight: 500;">
+              0.4 × Accuracy + 0.3 × Precision + 0.3 × Relevance
+            </div>
+          </div>
+        </div>
+        
+        <div class="summary-actions" style="display: flex; gap: 10px; justify-content: center;">
+          <a href="index.html" class="btn-summary">Back to Test</a>
+          <button onclick="window.print()" class="btn-summary secondary">Print Metrics</button>
+        </div>
+      `;
+
+      // Show and populate charts section
+      chartsSection.style.display = 'block';
+      chartsGrid.innerHTML = `
+        <div class="chart-container">
+          <div class="chart-title">Accuracy</div>
+          <div class="chart-wrapper">
+            <canvas id="accuracyChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">Precision</div>
+          <div class="chart-wrapper">
+            <canvas id="precisionChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">Answer Relevance</div>
+          <div class="chart-wrapper">
+            <canvas id="relevanceChart"></canvas>
+          </div>
+        </div>
+      `;
+
+      // Create charts after a short delay to ensure canvas elements are rendered
+      setTimeout(() => {
+        // Accuracy pie: Green = correct, Red = incorrect
+        createPieChart(
+          'accuracyChart',
+          'Accuracy Breakdown',
+          overallAccuracy,
+          'Correct',
+          'Incorrect',
+          {
+            positive: '#198754', // Green
+            negative: '#dc3545'  // Red
+          }
+        );
+
+        // Precision pie: Blue = precise, Grey = imprecise
+        createPieChart(
+          'precisionChart',
+          'Precision Breakdown',
+          overallPrecision,
+          'Precise',
+          'Imprecise',
+          {
+            positive: '#0d6efd', // Blue
+            negative: '#6c757d'  // Grey
+          }
+        );
+
+        // Answer relevance pie: Purple = relevant, Light grey = irrelevant
+        createPieChart(
+          'relevanceChart',
+          'Answer Relevance Breakdown',
+          overallAnswerRelevance,
+          'Relevant',
+          'Irrelevant',
+          {
+            positive: '#6f42c1', // Purple
+            negative: '#adb5bd'  // Light grey
+          }
+        );
+      }, 100);
+
+      // Display Overall Listening Level and Final Score
+      const levelSection = document.getElementById('level-section');
+      const levelText = document.getElementById('level-text');
+      const scoreText = document.getElementById('score-text');
+
+      if (finalListeningScore !== null && finalListeningScore !== undefined) {
+        const levelInfo = getListeningLevel(finalListeningScore);
+        const scoreValue = typeof finalListeningScore === 'number' ? finalListeningScore.toFixed(1) : finalListeningScore;
+        levelText.textContent = `Overall Listening Level: ${levelInfo.level}`;
+        scoreText.textContent = `Final Listening Score: ${scoreValue}/100`;
+        levelSection.style.display = 'block';
+      } else {
+        levelSection.style.display = 'none';
+      }
+    }
+
+    // AI Teacher Report Functions
+    async function generateAndDownloadReport() {
+      const btn = document.getElementById('mainDownloadReportBtn');
+      const text = document.getElementById('reportBtnText');
+
+      if (window.teacherAgent) {
+        window.teacherAgent.apiEndpoint = 'http://127.0.0.1:5003/api/generate-report';
+      }
+
+      const originalText = text.innerHTML;
+      text.innerHTML = 'Generating Report...';
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+
+      try {
+        const reportMarkdown = await window.teacherAgent.generateReport();
+        await window.teacherAgent.downloadPDF(reportMarkdown);
+        text.innerHTML = 'Downloaded!';
+        setTimeout(() => {
+          text.innerHTML = originalText;
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }, 3000);
+      } catch (error) {
+        alert('Failed to generate report: ' + error.message + '\nMake sure the Reading backend is running on port 5003.');
+        text.innerHTML = originalText;
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }
+    }
+
+    async function generateTeacherAnalysis() {
+      // Ensure teacherAgent uses correct API path from this directory
+      if (window.teacherAgent) {
+        window.teacherAgent.apiEndpoint = 'http://127.0.0.1:5003/api/generate-report';
+      }
+
+      const container = document.getElementById('aiReportContainer');
+      container.style.display = 'block';
+
+      try {
+        const reportMarkdown = await window.teacherAgent.generateReport();
+        const renderedHTML = marked.parse(reportMarkdown);
+
+        container.innerHTML = `
+                <div class="ai-report-card">
+                    <div class="ai-report-content">
+                        ${renderedHTML}
+                    </div>
+                </div>
+            `;
+        window.lastReportMarkdown = reportMarkdown;
+      } catch (error) {
+        container.innerHTML = `
+                <div class="ai-report-card" style="border-color: #dc3545;">
+                    <p style="color: #dc3545;"><strong>Error:</strong> ${error.message}</p>
+                    <p>Please check your internet connection and try refreshing the page.</p>
+                </div>
+            `;
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = getEvaluationData();
+      displaySummary(data);
+      // Auto-trigger teacher analysis
+      generateTeacherAnalysis();
+    });
+  </script>
+</body>
+
+</html>

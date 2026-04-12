@@ -1,0 +1,1008 @@
+/* =========================================
+   1. HOME STYLE (Base)
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    min-height: 100vh !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden;
+    position: relative;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Top Header Bar - Premium Minimalist */
+.top-header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    min-height: 90px;
+    background: #f8f9fa;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 80px;
+    animation: slideDownFade 0.6s ease-out;
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.3s ease;
+    color: #1a1a1a;
+    text-decoration: none;
+    position: relative;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: -0.01em;
+}
+
+.nav-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #1a1a1a;
+    text-transform: none;
+}
+
+.nav-icon:hover {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+.nav-icon svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.nav-icon:hover svg {
+    transform: scale(1.1);
+}
+
+.lab-branding {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    padding: 8px;
+    margin: -8px;
+}
+
+.lab-branding:hover {
+    background: rgba(147, 51, 234, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(147, 51, 234, 0.2);
+}
+
+.lab-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.lab-logo {
+    flex-shrink: 0;
+    animation: logoFloat 6s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.logo-image {
+    width: 90px;
+    height: auto;
+    max-height: 90px;
+    object-fit: contain;
+    filter: none;
+    transition: opacity 0.3s ease;
+    border-radius: 8px;
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.lab-info {
+    animation: fadeInLeft 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.lab-name {
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+}
+
+.lab-institution-main {
+    font-size: clamp(0.8rem, 1.3vw, 0.9rem);
+    color: #4a4a4a;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+}
+
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Writing module exam header (Tamil title + English subtitle, like reading module) */
+.writing-exam-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-height: 90px;
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.writing-exam-header .exam-header-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.writing-exam-header .exam-title {
+    flex-shrink: 0;
+}
+
+.writing-exam-header .exam-title h1 {
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-weight: 700;
+    color: #0a0a0a;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.writing-exam-header .exam-title h2 {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #666;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.writing-exam-header .exam-info {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.writing-exam-header .exam-info .info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.writing-exam-header .exam-info .info-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.writing-exam-header .timer-display {
+    background: #f0f0f0;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0a0a0a;
+    font-family: monospace;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    min-width: 4ch;
+}
+
+.writing-exam-header .level-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.writing-exam-header .level-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #f0f0f0;
+    color: #555;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.writing-exam-header .level-btn:hover {
+    background: #e5e5e5;
+    color: #0a0a0a;
+}
+
+.writing-exam-header .level-btn.active {
+    background: #0a0a0a;
+    color: #ffffff;
+    border-color: #0a0a0a;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.writing-exam-header .nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* =========================================
+   2. LEVEL SELECTION STYLE
+   ========================================= */
+
+/* Back Button */
+.back-button {
+    position: fixed;
+    top: 110px;
+    left: 30px;
+    width: 52px;
+    height: 52px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    transform: translateY(-2px);
+    background: #f8f9fa;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button svg {
+    transition: transform 0.3s ease;
+}
+
+.back-button:hover svg {
+    transform: scale(1.1);
+}
+
+/* Level Selection Container */
+.level-selection-container {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 120px 60px 80px;
+    position: relative;
+    z-index: 10;
+    animation: fadeInUp 0.8s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: #ffffff;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.level-selection-content {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.level-selection-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: -0.05em;
+}
+
+.level-selection-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: #666666;
+    text-align: center;
+    margin-bottom: 60px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.level-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.level-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 40px 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    /* If using a tag */
+}
+
+.level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+.level-card-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.level-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+}
+
+.basic-badge {
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid rgba(25, 118, 210, 0.2);
+}
+
+.intermediate-badge {
+    background: #fff3e0;
+    color: #f57c00;
+    border: 1px solid rgba(245, 124, 0, 0.2);
+}
+
+.advanced-badge {
+    background: #f3e5f5;
+    color: #7b1fa2;
+    border: 1px solid rgba(123, 31, 162, 0.2);
+}
+
+.level-name {
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.level-assessments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+    justify-content: center;
+}
+
+.assessment-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    background: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #4a4a4a;
+}
+
+.level-description {
+    font-size: 1rem;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.select-level-btn {
+    width: 100%;
+    padding: 14px 24px;
+    background: #000000;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.select-level-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    background: #1a1a1a;
+}
+
+/* LOCKED STATE (Added by Agent) */
+.level-card.locked {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: #fcfcfc;
+}
+
+.level-card.locked:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.level-card.locked .select-level-btn {
+    background: #e0e0e0;
+    border-color: #d0d0d0;
+    color: #888;
+    pointer-events: none;
+}
+
+.level-card.locked .level-badge {
+    background: #eee;
+    color: #999;
+    border-color: #ddd;
+}
+
+/* =========================================
+   3. EXAM / QUESTION PAGE STYLE (Custom adaptation)
+   ========================================= */
+.exam-container {
+    padding: 140px 20px 60px;
+    /* Account for fixed header */
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.question-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.question-label {
+    font-size: 0.9rem;
+    color: #9333ea;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+textarea {
+    width: 100%;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: 'Mukta Malar', 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    resize: vertical;
+    background: #fcfcfc;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #9333ea;
+    box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
+    background: #ffffff;
+}
+
+.btn-primary {
+    padding: 14px 32px;
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.alert-success {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.alert-error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.alert-info {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #dbeafe;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .level-selection-container {
+        padding: 100px 20px 60px;
+    }
+
+    .top-header-bar {
+        padding: 15px 20px;
+        min-height: 70px;
+    }
+
+    .lab-logo-container {
+        gap: 10px;
+    }
+
+    .logo-image {
+        width: 60px;
+        max-height: 60px;
+    }
+
+    .lab-name {
+        font-size: 0.9rem;
+    }
+}
+
+/* =========================================
+   Tamil Virtual Keyboard (Writing Module)
+   Premium: refined surface, soft shadows, polished keys
+   ========================================= */
+.tamil-keyboard-writing {
+    width: 100%;
+    max-width: 920px;
+    margin: 20px 0 0;
+    padding: 20px 22px 22px;
+    background: linear-gradient(165deg, #eef0f3 0%, #e2e5ea 50%, #d8dce2 100%);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04),
+        0 10px 28px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    display: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.tamil-keyboard-writing::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+    pointer-events: none;
+}
+
+.tamil-keyboard-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.tamil-keyboard-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+.tamil-keyboard-key {
+    min-width: 38px;
+    height: 42px;
+    padding: 0 10px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+    color: #0f0f0f;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.15s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04),
+        0 2px 4px rgba(0, 0, 0, 0.03);
+    letter-spacing: 0.01em;
+}
+
+.tamil-keyboard-key:hover {
+    background: linear-gradient(180deg, #ffffff 0%, #f2f4f7 100%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 0, 0, 0.04);
+    transform: translateY(-1px);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.tamil-keyboard-key:active {
+    background: linear-gradient(180deg, #e8eaef 0%, #e2e5eb 100%);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06),
+        inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    transform: translateY(0);
+}
+
+.tamil-keyboard-shift {
+    min-width: 56px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.tamil-keyboard-backspace {
+    min-width: 48px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.tamil-keyboard-shift.active {
+    background: linear-gradient(180deg, #d4d8de 0%, #c8cdd5 100%);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-weight: 600;
+}
+
+.tamil-keyboard-space {
+    flex: 1;
+    min-width: 200px;
+    max-width: 340px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.tamil-keyboard-close {
+    min-width: 48px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.tamil-keyboard-close:hover {
+    background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%);
+    border-color: rgba(220, 38, 38, 0.2);
+    color: #b91c1c;
+}
+
+.tamil-keyboard-control-row {
+    margin-top: 8px;
+    padding-top: 8px;
+    width: 100%;
+    max-width: 540px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ============================================================
+   AI Teacher Report Premium Styles 
+============================================================ */
+.ai-teacher-section {
+    margin-top: 60px;
+    padding-top: 60px;
+    border-top: 2px dashed rgba(13, 110, 253, 0.1);
+    animation: fadeIn 1s ease-out;
+}
+
+.ai-report-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 50px;
+    margin-top: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Outfit', sans-serif;
+    text-align: left;
+    /* override center alignment */
+}
+
+.ai-report-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(180deg, #6366f1 0%, #a855f7 100%);
+}
+
+.ai-report-content {
+    line-height: 1.7;
+    color: #334155;
+    font-size: 1.1rem;
+}
+
+.ai-report-content h1,
+.ai-report-content h2,
+.ai-report-content h3 {
+    color: #1e293b;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.ai-report-content h1 {
+    font-size: 2.2rem;
+    text-align: center;
+    background: linear-gradient(90deg, #4f46e5, #9333ea);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 0;
+}
+
+.ai-report-content h2 {
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.ai-report-content h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.ai-report-content p {
+    margin-bottom: 20px;
+}
+
+.ai-report-content ul,
+.ai-report-content ol {
+    margin-bottom: 30px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.ai-report-content li {
+    margin-bottom: 16px;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border-left: 4px solid #cbd5e1;
+    transition: all 0.2s ease;
+}
+
+.ai-report-content li:hover {
+    transform: translateX(5px);
+    background: #f1f5f9;
+    border-left-color: #6366f1;
+}
+
+.ai-report-content strong {
+    color: #4f46e5;
+    font-weight: 600;
+}
+
+/* Callout blocks for mistakes/wrong answers */
+.ai-report-content blockquote,
+.ai-report-content .mistake-block {
+    background: #fff1f2;
+    border-left: 4px solid #f43f5e;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.ai-report-content .solution-block {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.loading-ai {
+    text-align: center;
+    padding: 60px 40px;
+}
+
+.spinner-ai {
+    width: 64px;
+    height: 64px;
+    border: 4px solid #f1f5f9;
+    border-top: 4px solid #6366f1;
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    margin: 0 auto 30px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.loading-ai p {
+    font-size: 1.25rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* PDF Download Button Premium */
+.pdf-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.pdf-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+.pdf-btn svg {
+    width: 20px;
+    height: 20px;
+}

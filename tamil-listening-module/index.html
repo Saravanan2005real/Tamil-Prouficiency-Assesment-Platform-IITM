@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>தமிழ் கேட்பு மற்றும் புரிதல் மதிப்பீடு / Tamil Listening and Understanding Assessment</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- AI Teacher Agent Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="teacher-agent.js"></script>
+
+  <style>
+    /* AI Report Button Styling */
+    .ai-download-btn {
+      display: inline-block;
+      margin-top: 24px;
+      margin-left: 10px;
+      padding: 14px 28px;
+      text-decoration: none;
+      color: #fff;
+      background: #0d6efd;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.3s;
+    }
+
+    .ai-download-btn:hover {
+      background: #0056b3;
+    }
+
+    .ai-download-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body data-page="listening">
+  <!-- HEADER (same style as example pages) -->
+  <div class="exam-header">
+    <div class="exam-header-content">
+      <div class="exam-title">
+        <h1>தமிழ் கேட்பு மற்றும் புரிதல் மதிப்பீடு</h1>
+        <h2>Tamil Listening and Understanding Assessment</h2>
+      </div>
+      <div class="exam-info">
+        <div class="info-item">
+          <span class="info-label">Time Remaining:</span>
+          <div id="global-timer" class="timer-display">15:00</div>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Levels:</span>
+          <div class="level-buttons">
+            <button data-level="1" class="level-btn active">Level 1</button>
+            <button data-level="2" class="level-btn">Level 2</button>
+            <button data-level="3" class="level-btn">Level 3</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT LAYOUT (full-width, like example exam-container) -->
+  <div class="exam-container">
+    <!-- AUDIO SECTION (left) -->
+    <div class="content-section" id="audio-section">
+      <div class="section-header">
+        <h2>ஆடியோ / Audio</h2>
+      </div>
+      <div class="audio-box">
+        <audio id="audio-player" controls></audio>
+        <p id="audio-status" class="status-text">Loading audio...</p>
+        <button id="play-audio-btn" class="btn-primary" style="display:none; margin-top: 10px;">
+          Play
+        </button>
+      </div>
+    </div>
+
+    <!-- QUESTIONS SECTION (right) -->
+    <div class="content-section" id="questions-section">
+      <div class="section-header">
+        <h2>கேள்விகள் / Questions</h2>
+      </div>
+      <form id="answer-form">
+        <div class="questions-container" id="questions-container">
+          <p style="color: #666; padding: 20px; text-align: center;">Loading questions...</p>
+        </div>
+        <div class="section-footer questions-footer">
+          <button type="button" class="btn-primary" id="submit-btn">
+            Submit Answers
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- RESULT AREA (below, full width) -->
+  <div class="result-wrapper" id="result-card" style="display:none;">
+    <div class="result-inner">
+      <h2>Result</h2>
+      <p id="result-summary"></p>
+      <div id="result-details"></div>
+      <div class="result-actions">
+        <button type="button" class="btn-primary" id="next-level-btn" style="display:none;">
+          Go to next level
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="example/tamil-keyboard.js"></script>
+  <script src="assessment-flow.js"></script>
+  <script src="script.js?v=3"></script>
+  <script>
+    // Verify script loaded
+    window.addEventListener('load', function () {
+      if (!window.tamilListeningModuleLoaded) {
+        console.error("❌ script.js did not load!");
+        const errorDiv = document.createElement("div");
+        errorDiv.style.cssText = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #c0392b; color: white; padding: 20px; border-radius: 8px; z-index: 10000; text-align: center;";
+        errorDiv.innerHTML = "<strong>⚠️ Script Loading Error</strong><br>script.js did not load properly.<br><button onclick='location.reload()' style='margin-top: 10px; padding: 8px 16px; background: white; color: #c0392b; border: none; border-radius: 4px; cursor: pointer;'>Reload Page</button>";
+        document.body.appendChild(errorDiv);
+      } else {
+        console.log("✅ Script loaded successfully");
+      }
+    });
+  </script>
+</body>
+
+</html>

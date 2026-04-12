@@ -1,0 +1,109 @@
+{
+  "audio_id": "level3audio",
+  "audio": {
+    "audio_id": "level3audio",
+    "url": "/audio/level3audio"
+  },
+  "audio_transcript": "இன்று நம் சிறப்பு விருந்தினராகப் பேட்டி அளிப்பவருக்கு நம் இந்திய தேசத்தில் ஏன் உலக அரங்கிலேயே அறிமுகம் தேவையில்லை. வணக்கம் ஐயா வணக்கம். எல்லா பொதுமக்களும் ஒவ்வொரு தேர்தலையும் வரப்போற முதல்வர் நமக்கு ஏதாவது நல்லது பண்ணுவாரு அப்படிங்கிற நம்பிக்கையில தான் ஓட்டு போடுறாங்க. ஆனா கடைசியில அவங்களுக்கு மிஞ்சினது என்னமோ ஏமாற்றமும் அதிருப்தி தான். இது நம் ஆட்சியிலயும் இருக்கு. இதுக்கு காரணம் என்னங்க ஐயா? என்ன சொல்றீங்க நீங்க? மக்களோட வாழ்க்கைத்தரம் உயர்ந்திருக்கு. கடந்த பதினஞ்சு வருஷமா பஞ்சம் பட்டினின்னு எவனா செத்தான்னு செய்தி வந்திருக்கா சொல்லுங்க. பணக்காரங்க மேலும் பணக்காரங்களாயிட்டே இருக்காங்க. ஏழங்க இன்னும் ஏழை ஆயிட்டே இருக்காங்க. பஸ்லயும் ரயில்லயும் கசங்குறாங்க. மக்கள் அரிசிக்கும் மண்ணெண்ணெய்க்கும் மணிக்கணக்கா கியூல நிக்கிறாங்க. சத்துணவுக்காக மட்டுமே பிள்ளைங்கள ஸ்கூலுக்கு அனுப்புறாங்க. ஐயா நம்ம குழந்தைங்க இன்னும் ரோட்ல பிச்சை எடுத்துட்டு தானையா இருக்காங்க. குத்தம் சொல்றவங்க சொல்லிக்கிட்டு தான் இருப்பாங்க. தம்பி, நான் ஆர்ச்சிக்கு வந்ததுக்குப் படித்தவர்கள் எண்ணிக்கு 62.5 சதவிதாக இருக்கிறது. ஆனால் கேரலாலே 100 சதவிதாக இருக்கிறதே ஐயா. தொழில் ரீதியாக 7 இடத்தில் இருந்தது, இப்போது 5 இடத்திற்கு வந்திருக்கிறது. வெங்கலப்பத்துக்கும் வாங்குவதுவிட, தங்கப்பத்துக்கும் வாங்குவதுவிட 01:23 புள்ளி விவரம் சரியாகத் தெரிந்துகொண்டுதான் பேசவேண்டும். சரி.",
+  "level": 3,
+  "description": "நீங்கள் ஒரு நிஜ வாழ்க்கை உரையாடல் காட்சியைப் பற்றிய ஒலிப்பதிவை கேட்பீர்கள். இது மேம்பட்ட நிலைக்கான தேர்வாகும். கவனமாக கேட்டு கேள்விகளுக்கு பதிலளிக்கவும்.",
+  "_locked_question_order": "This order is FINAL and should not be changed. Level 3 must have exactly 4 questions in this order: 1. Short answer (next action) - ID: 2, 2. Fill in missing phrase - ID: 3, 3. Long answer (problem explanation) - ID: 4, 4. Long answer (conversation description) - ID: 5. Note: Q1 (MCQ emotion) has been removed.",
+  "questions": [
+    {
+      "id": "1",
+      "type": "short_answer",
+      "question_text_tamil": "ஒவ்வொரு தேர்தலிலும் மக்கள் ஓட்டு போடுவதற்கான காரணம் என்ன என்று பேச்சாளர் கூறுகிறார்?",
+      "question_text_english": "What reason does the speaker give for why people vote in every election?",
+      "instruction_tamil": "(1–2 வாக்கியங்களில் எழுதவும்)",
+      "description": "Short answer",
+      "answer": "மக்கள் ஒவ்வொரு தேர்தலிலும் புதிய முதல்வர் நமக்காக நல்லது செய்வார் என்ற நம்பிக்கையால் ஓட்டு போடுகிறார்கள்.",
+      "alternatives": [
+        "புதிய முதல்வர் நல்லது செய்வார் என்ற நம்பிக்கையில்தான் மக்கள் ஓட்டு போடுகிறார்கள்",
+        "ஒவ்வொரு தேர்தலிலும் ஏதாவது நல்லது நடக்கும் என்ற நம்பிக்கையில் மக்கள் வாக்களிக்கிறார்கள்",
+        "நம்பிக்கையால் மக்கள் ஓட்டு போடுகிறார்கள்"
+      ]
+    },
+    {
+      "id": "2",
+      "type": "fill_missing_phrase",
+      "question_text_tamil": "பேச்சாளர் கூறுவதப்படி, அவர் ஆட்சிக்கு வந்ததுக்குப் பிறகு படித்தவர்களின் சதவீதம் ______ ஆக இருக்கிறது.",
+      "question_text_english": "According to the speaker, after he came to power the literacy percentage is ______.",
+      "sentence_template": "",
+      "sentence_english": "",
+      "description": "Fill in the missing number",
+      "input_type": "number",
+      "numeric_only": true,
+      "answer": "62.5"
+    },
+    {
+      "id": "3",
+      "type": "long_answer",
+      "question_text_tamil": "உணவு பற்றாக்குறையால் மக்கள் உயிரிழப்பதை குறிக்க பேச்சாளர் பயன்படுத்திய துல்லியமான சொற்றொடரை எழுதுங்கள்.",
+      "question_text_english": "Write the exact phrase used by the speaker to refer to people dying due to food shortage.",
+      "instruction_tamil": "(துல்லியமான சொற்றொடர் / Exact phrase)",
+      "description": "Long answer - Exact phrase",
+      "answer": "பஞ்சம், பட்டினி",
+      "alternatives": [
+        "பஞ்சம் பட்டினி",
+        "பட்டினி பஞ்சம்",
+        "பஞ்சம் பட்ணி",
+        "பட்ணி பஞ்சம்"
+      ],
+      "key_ideas": [
+        {
+          "tamil": "பஞ்சம்",
+          "english": "famine"
+        },
+        {
+          "tamil": "பட்டினி",
+          "english": "starvation"
+        },
+        {
+          "tamil": "பட்ணி",
+          "english": "starvation (alternative spelling)"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "type": "long_answer",
+      "question_text_tamil": "ஆட்சிக் காலத்தில் சாதித்ததாக பேச்சாளர் கூறும் விஷயங்களில் மூன்றை குறிப்பிடுங்கள்.",
+      "question_text_english": "Mention three things that the speaker says they achieved during their rule.",
+      "instruction_tamil": "(40-80 சொற்களில் எழுதவும் / Write in 40-80 words - Mention at least 3 achievements)",
+      "description": "Long answer - Three Achievements",
+      "answer": "படித்தவர்களின் சதவீதம் 62.5% ஆக உயர்ந்துள்ளது, கடந்த 15 ஆண்டுகளில் பஞ்சம் பட்டினி மரணம் இல்லை, மாநிலத்தின் தொழில் தரவரிசை 7-வது இடத்திலிருந்து 5-வது இடத்திற்கு முன்னேற்றம்.",
+      "alternatives": [
+        "படித்தவர்களின் சதவீதம் உயர்ந்தது, பஞ்சம் பட்டினி மரணம் இல்லை, தொழில் தரவரிசை முன்னேற்றம்",
+        "கல்வி விகிதம் உயர்ந்தது, பஞ்சம் மரணங்கள் இல்லை, தொழில் தரவரிசை 7-வது இடத்திலிருந்து 5-வது",
+        "படித்தவர்களின் விகிதம் உயர்ந்தது, பட்டினி மரணம் இல்லை, தொழில் முன்னேற்றம்",
+        "கல்வி சதவீதம் உயர்ந்தது, பஞ்சம் இல்லை, தொழில் தரவரிசை முன்னேறியது"
+      ],
+      "key_ideas": [
+        {
+          "tamil": "படித்தவர்களின் சதவீதம்/விகிதம் உயர்ந்தது",
+          "english": "literacy rate/percentage increased"
+        },
+        {
+          "tamil": "பஞ்சம் பட்டினி மரணம் இல்லை",
+          "english": "no famine/starvation deaths"
+        },
+        {
+          "tamil": "தொழில் தரவரிசை முன்னேற்றம்/முன்னேறியது",
+          "english": "industry ranking improved/progress"
+        },
+        {
+          "tamil": "கல்வி முன்னேற்றம்",
+          "english": "education improvement"
+        },
+        {
+          "tamil": "தொழில் முன்னேற்றம்",
+          "english": "industry improvement"
+        },
+        {
+          "tamil": "மக்களின் வாழ்க்கைத்தரம் மேம்பட்டது",
+          "english": "people's quality of life improved"
+        }
+      ]
+    }
+  ]
+}

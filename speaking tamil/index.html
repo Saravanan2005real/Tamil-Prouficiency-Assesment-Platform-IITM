@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>தமிழ் பேசும் திறன் மதிப்பீடு</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="speaking">
+    <!-- Test/Assessment Page -->
+    <div id="test-page" class="page-view">
+        <div class="exam-header">
+            <div class="exam-header-content">
+                <div class="exam-title">
+                    <h1>தமிழ் பேசும் திறன் மதிப்பீடு</h1>
+                    <h2>Tamil Speaking Assessment</h2>
+                </div>
+                <div class="exam-info">
+                    <div class="info-item">
+                        <span class="info-label">Time Remaining:</span>
+                        <div id="global-timer" class="timer-display">10:00</div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Levels:</span>
+                        <div class="level-buttons">
+                            <button id="level-1-btn" data-level="1" class="level-btn">Level 1</button>
+                            <button id="level-2-btn" data-level="2" class="level-btn">Level 2</button>
+                            <button id="level-3-btn" data-level="3" class="level-btn">Level 3</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exam-container">
+            <!-- Left Column: Virtual Interviewer + Question -->
+            <div class="left-column">
+                <!-- Avatar Section (Static Photo) -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Virtual Interviewer</h2>
+                    </div>
+                    <div class="avatar-container">
+                        <div id="avatar" class="avatar avatar-idle">
+                            <div class="real-avatar-container">
+                                <img src="lady.png" class="real-avatar-img" alt="Virtual Interviewer">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Controls Section Moved Here -->
+                    <div class="section-footer">
+                        <button id="play-repeat-question-btn" class="btn-primary">Play Question</button>
+                        <button id="mic-toggle-btn" class="btn-primary" disabled>Start Mic</button>
+                        <button id="skip-level-btn" class="btn-secondary" disabled>Skip Level</button>
+                        <button id="next-level-btn" class="btn-primary" style="display: none; background: #28a745;">Next
+                            Question</button>
+                    </div>
+                </div>
+
+                <!-- Question Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Question</h2>
+                    </div>
+                    <div class="question-container">
+                        <p id="question-text" class="question-text">Loading question...</p>
+                        <p id="question-hint"
+                            style="margin-top: 10px; color: #ff9800; font-size: 0.9em; font-weight: 600;">⚠️ Click
+                            anywhere on the page or click "Play Question" button to hear the question</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Transcript -->
+            <div class="right-column">
+                <!-- Live Transcript Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Live Transcript</h2>
+                    </div>
+                    <div class="transcript-container">
+                        <p id="live-transcript" class="transcript-text">Press "Start Mic" and speak to see live
+                            captions…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section: Assessment Result (Full Width) -->
+            <div class="bottom-section">
+                <!-- Assessment Result Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Assessment</h2>
+                    </div>
+                    <div class="result-container">
+                        <p id="result-text" class="result-text">Record your answer to see the result.</p>
+                    </div>
+
+                    <!-- AI Teacher Section Per-Level -->
+                    <div id="ai-teacher-section"
+                        style="display: none; margin-top: 24px; border-top: 2px dashed rgba(0,0,0,0.1); padding-top: 24px;">
+                        <div class="section-header">
+                            <h2>AI Teacher Insight</h2>
+                        </div>
+                        <div id="ai-report-container"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="results-page" class="page-view hidden">
+        <div class="exam-header">
+            <div class="exam-header-content">
+                <div class="exam-title">
+                    <h1>தமிழ் பேசும் திறன் மதிப்பீடு</h1>
+                    <h2>Results</h2>
+                </div>
+                <div class="exam-info">
+                    <a href="http://127.0.0.1:5000/level-selection.html" class="btn-primary dashboard-btn"
+                        id="dashboard-btn-results">Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="exam-container">
+            <div class="content-section" id="results-section">
+                <div class="section-header">
+                    <h2>Final Assessment</h2>
+                </div>
+                <div class="results-container show" id="final-results-container">
+                    <div class="results-header simple">
+                        <div class="result-status" id="result-status-text">--</div>
+                        <div class="result-marks" id="result-marks-text">--</div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 1.1em;">
+                        <div id="result-percentage"></div>
+                    </div>
+                    <div id="detailed-results" style="margin-top: 20px;"></div>
+                    <div id="results-actions"
+                        style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+                        <button class="btn-primary" onclick="restartTest()">Restart Test</button>
+                        <a href="http://127.0.0.1:5000/level-selection.html" class="btn-primary dashboard-btn"
+                            style="display: inline-block; text-decoration: none; text-align: center;">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final AI Teacher Report -->
+            <div class="content-section" id="final-ai-teacher-section" style="display: none; margin-top: 24px;">
+                <div class="section-header">
+                    <h2>Personalized AI Teacher Report</h2>
+                </div>
+                <div id="final-ai-report-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Agent Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script src="teacher-agent.js"></script>
+    <script src="assessment-flow.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

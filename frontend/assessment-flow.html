@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Flow - Tamil Language Assessment</title>
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="selection-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- External Libraries for AI Assessment Analysis -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        integrity="sha512-BNaRQnY9KRC8tX3fLx0o0K9w2v/YvI8p6N0sMvB4A9X4U3N0f8l5J4iX4o3X4w2vYvI8p6N0sMvB4A9X4U=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Custom AI Teacher Agent -->
+    <script src="js/teacher-agent.js"></script>
+
+    <style>
+        body {
+            background: #fafbfc;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .flow-container {
+            width: 100%;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 160px 40px 100px;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background: #fafbfc;
+        }
+
+        .rules-card {
+            width: 100%;
+            max-width: 1200px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            box-shadow: none;
+            position: relative;
+            overflow: visible;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .rules-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #0a0a0a;
+            margin: 0 auto 80px auto;
+            text-align: center;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            position: relative;
+            padding: 0;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .rules-title::after {
+            content: '';
+            position: absolute;
+            bottom: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0a0a0a, transparent);
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto 80px auto;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .rules-list li {
+            font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+            color: #1a1a1a;
+            line-height: 1.85;
+            margin-bottom: 24px;
+            padding: 32px 40px 32px 72px;
+            position: relative;
+            font-weight: 400;
+            text-align: left;
+            width: 100%;
+            max-width: 100%;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.02);
+        }
+
+        .rules-list li:hover {
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .rules-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .rules-list li::before {
+            content: '';
+            position: absolute;
+            left: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #0a0a0a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(10, 10, 10, 0.08);
+        }
+
+        .rule-item-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .rule-english {
+            color: #0a0a0a;
+            line-height: 1.8;
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+            letter-spacing: -0.015em;
+            font-size: 1em;
+        }
+
+        .rule-tamil {
+            color: #4a5568;
+            line-height: 1.8;
+            font-family: 'Noto Sans Tamil', 'Arial Unicode MS', sans-serif;
+            font-size: 0.95em;
+            padding-right: 0;
+            direction: ltr;
+            text-align: left;
+            font-weight: 400;
+            width: 100%;
+            letter-spacing: -0.01em;
+            margin-top: 4px;
+            padding-left: 0;
+        }
+
+
+        .start-test-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 22px 56px;
+            background: #0a0a0a;
+            border: 1px solid #0a0a0a;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            justify-content: center;
+            letter-spacing: -0.02em;
+        }
+
+        .start-test-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .start-test-btn:hover::before {
+            left: 100%;
+        }
+
+        .start-test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: #1a1a1a;
+            border-color: #1a1a1a;
+        }
+
+        .start-test-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .start-test-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .start-test-btn:hover svg {
+            transform: translateX(4px);
+        }
+
+        .start-test-btn svg {
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+            width: 20px;
+            height: 20px;
+        }
+
+        .start-test-btn:hover svg {
+            transform: translateX(4px);
+        }
+
+        .btn-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .flow-container {
+                padding: 120px 16px 60px;
+            }
+
+            .rules-card {
+                padding: 0;
+                border-radius: 0;
+                max-width: 100%;
+            }
+
+            .rules-title {
+                margin-bottom: 40px;
+            }
+
+            .rules-title::after {
+                width: 60px;
+                bottom: -16px;
+            }
+
+            .rules-list {
+                margin: 0 auto 50px auto;
+                padding: 0 16px;
+            }
+
+            .rules-list li {
+                margin-bottom: 24px;
+                padding: 20px 20px 20px 44px;
+            }
+
+            .start-test-btn {
+                width: calc(100% - 32px);
+            }
+
+            .rules-list li::before {
+                left: 14px;
+                top: 20px;
+                width: 20px;
+                height: 20px;
+                font-size: 1rem;
+            }
+
+            .rule-tamil {
+                font-size: 0.9em;
+            }
+
+            .start-test-btn {
+                padding: 16px 28px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Back Button - Premium Minimalist */
+        .back-button {
+            position: fixed;
+            top: 110px;
+            left: 30px;
+            width: 52px;
+            height: 52px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            background: #f8f9fa;
+            border-color: rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button svg {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover svg {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                top: 100px;
+                left: 20px;
+                width: 46px;
+                height: 46px;
+            }
+        }
+
+        /* AI Teacher Agent Styling */
+        .ai-report-card {
+            width: 100%;
+            max-width: 1200px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 48px;
+            margin: 40px auto;
+            border: 2px solid #0d6efd;
+            box-shadow: 0 20px 48px rgba(13, 110, 253, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-report-card::before {
+            content: 'AI TEACHER ANALYSIS';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #0d6efd;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .ai-report-content {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+            color: #2d3748;
+        }
+
+        .ai-report-content h1,
+        .ai-report-content h2,
+        .ai-report-content h3 {
+            color: #1a1a1a;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .ai-report-content h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid rgba(13, 110, 253, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .ai-report-content p {
+            margin-bottom: 20px;
+        }
+
+        .ai-report-content ul,
+        .ai-report-content ol {
+            margin-bottom: 24px;
+            padding-left: 20px;
+        }
+
+        .ai-report-content li {
+            margin-bottom: 8px;
+        }
+
+        .ai-btn-primary {
+            background: #0d6efd;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px auto;
+        }
+
+        .ai-btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading-ai {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .spinner-ai {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(13, 110, 253, 0.1);
+            border-top: 4px solid #0d6efd;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .ai-teacher-avatar {
+            width: 80px;
+            height: 80px;
+            background: #f0f4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: #0d6efd;
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Back Button -->
+    <a href="#" class="back-button" onclick="history.back(); return false;" title="Back to Previous Page">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <!-- Flow Container -->
+    <div class="flow-container">
+        <div class="rules-card" id="rulesCard">
+            <h2 class="rules-title" id="rulesTitle">Listening Assessment Rules | கேட்புத் திறன் மதிப்பீடு வழிமுறைகள்
+            </h2>
+            <ul class="rules-list" id="rulesList">
+                <!-- Rules will be dynamically generated -->
+            </ul>
+            <button class="start-test-btn" id="startTestBtn">
+                <span class="btn-text">Start Listening Test</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Animated Background Elements -->
+    <div class="bg-elements">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+        <div class="bg-circle circle-4"></div>
+    </div>
+
+    <!-- Module Configuration and Integration Scripts (absolute paths so they load from portal) -->
+    <script src="/modules-config.js"></script>
+    <script src="/modules-integration.js"></script>
+
+    <script>
+        let currentTest = 'listening'; // 'listening', 'speaking', 'reading', or 'writing'
+        let listeningResults = null;
+        let speakingResults = null;
+        let readingResults = null;
+        let writingResults = null;
+
+        const rulesCard = document.getElementById('rulesCard');
+        const rulesTitle = document.getElementById('rulesTitle');
+        const rulesList = document.getElementById('rulesList');
+        const startTestBtn = document.getElementById('startTestBtn');
+
+        // Listening rules - Bilingual (English and Tamil)
+        const listeningRules = [
+            {
+                english: 'This test consists of 3 levels: Level 1, Level 2, and Level 3.',
+                tamil: 'இந்தத் தேர்வு 3 நிலைகளைக் கொண்டது: நிலை 1, நிலை 2, மற்றும் நிலை 3.'
+            },
+            {
+                english: 'The total exam time is 15 minutes. The timer will start once you begin the test.',
+                tamil: 'மொத்த தேர்வு நேரம் 15 நிமிடங்கள். நீங்கள் தேர்வைத் தொடங்கியவுடன் நேரம் தொடங்கும்.'
+            },
+            {
+                english: 'Audio can be played only 2 times. There is no pause button. Listen carefully and understand the content before answering.',
+                tamil: 'ஒலிப்பதிவை 2 முறை மட்டுமே இயக்கலாம். நிறுத்த பொத்தான் இல்லை. கவனமாகக் கேட்டு, பதிலளிப்பதற்கு முன் உள்ளடக்கத்தைப் புரிந்து கொள்ளுங்கள்.'
+            },
+            {
+                english: 'You can use the microphone button to speak your answers instead of typing.',
+                tamil: 'தட்டச்சு செய்வதற்குப் பதிலாக, உங்கள் பதில்களைப் பேச மைக்ரோஃபோன் பொத்தானைப் பயன்படுத்தலாம்.'
+            },
+            {
+                english: 'All questions in each level must be attempted.',
+                tamil: 'ஒவ்வொரு நிலையிலும் உள்ள அனைத்து கேள்விகளுக்கும் நீங்கள் பதிலளிக்க வேண்டும்.'
+            },
+            {
+                english: 'Answer questions based on what you heard and understood from the audio.',
+                tamil: 'நீங்கள் கேட்டதையும் புரிந்து கொண்டதையும் அடிப்படையாகக் கொண்டு கேள்விகளுக்குப் பதிலளிக்கவும்.'
+            },
+            {
+                english: 'Evaluation happens at the end after completing the whole test.',
+                tamil: 'மதிப்பீடு முழு தேர்வும் முடிந்த பிறகு மட்டுமே நடைபெறும்.'
+            }
+        ];
+
+        // Speaking rules - Bilingual (English and Tamil)
+        const speakingRules = [
+            {
+                english: 'Ensure you have a working microphone and a quiet environment.',
+                tamil: 'செயல்படும் மைக்ரோஃபோன் மற்றும் அமைதியான சூழலை உறுதிப்படுத்திக் கொள்ளுங்கள்.'
+            },
+            {
+                english: 'You will be asked questions in Tamil. Listen carefully before responding.',
+                tamil: 'தமிழில் கேள்விகள் கேட்கப்படும். பதிலளிப்பதற்கு முன் கவனமாகக் கேளுங்கள்.'
+            },
+            {
+                english: 'Read and understand the given prompts or questions. Only after understanding, you can speak and express your response clearly.',
+                tamil: 'கொடுக்கப்பட்ட கேள்விகளைப் படித்து புரிந்து கொள்ளுங்கள். புரிந்து கொண்ட பிறகே, உங்கள் பதிலைத் தெளிவாகப் பேசி வெளிப்படுத்துங்கள்.'
+            },
+            {
+                english: 'Speak clearly and naturally. Take your time to formulate your answers.',
+                tamil: 'தெளிவாகவும் இயல்பாகவும் பேசுங்கள். உங்கள் பதில்களை உருவாக்க நேரம் எடுத்துக் கொள்ளுங்கள்.'
+            },
+            {
+                english: 'Each question has a time limit. Make sure to complete your answer within the time.',
+                tamil: 'ஒவ்வொரு கேள்விக்கும் நேர வரம்பு உள்ளது. நேரத்திற்குள் உங்கள் பதிலை முடிக்க உறுதிப்படுத்திக் கொள்ளுங்கள்.'
+            },
+            {
+                english: 'Click "Start Recording" when you\'re ready to answer, and "Stop Recording" when finished.',
+                tamil: 'பதிலளிக்கத் தயாராக இருக்கும்போது "Start Recording" என்பதைக் கிளிக் செய்யவும், முடிந்ததும் "Stop Recording" என்பதைக் கிளிக் செய்யவும்.'
+            }
+        ];
+
+        // Reading rules - Bilingual (English and Tamil)
+        const readingRules = [
+            {
+                english: 'Read the passage carefully and understand its meaning. Reading and understanding are different - make sure you comprehend the content before answering.',
+                tamil: 'பத்தியைக் கவனமாகப் படித்து அதன் பொருளைப் புரிந்து கொள்ளுங்கள். படித்தலும் புரிந்து கொள்ளுதலும் வேறுபட்டவை - பதிலளிப்பதற்கு முன் உள்ளடக்கத்தைப் புரிந்து கொண்டுள்ளீர்கள் என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்.'
+            },
+            {
+                english: 'You can use Google Input Tools or the Tamil keyboard to type your answers.',
+                tamil: 'உங்கள் பதில்களைத் தட்டச்சு செய்ய Google Input Tools அல்லது தமிழ் விசைப்பலகையைப் பயன்படுத்தலாம்.'
+            },
+            {
+                english: 'Answer in complete sentences in Tamil.',
+                tamil: 'தமிழில் முழுமையான வாக்கியங்களில் பதிலளிக்கவும்.'
+            },
+            {
+                english: 'Take your time to think before submitting your answer.',
+                tamil: 'உங்கள் பதிலைச் சமர்ப்பிப்பதற்கு முன் சிந்திக்க நேரம் எடுத்துக் கொள்ளுங்கள்.'
+            },
+            {
+                english: 'Each question will be evaluated on multiple criteria.',
+                tamil: 'ஒவ்வொரு கேள்வியும் பல அளவுகோல்களின் அடிப்படையில் மதிப்பீடு செய்யப்படும்.'
+            },
+            {
+                english: 'Review your answers before submitting.',
+                tamil: 'சமர்ப்பிப்பதற்கு முன் உங்கள் பதில்களை மீண்டும் பார்வையிடுங்கள்.'
+            }
+        ];
+
+        function showRules(testType) {
+            currentTest = testType;
+            let rules = [];
+            let title = '';
+            let buttonText = '';
+
+            if (testType === 'listening') {
+                rules = listeningRules;
+                title = 'Listening Assessment Rules';
+                buttonText = 'Start Listening Test';
+            } else if (testType === 'speaking') {
+                rules = speakingRules;
+                title = 'Speaking Assessment Rules';
+                buttonText = 'Start Speaking Test';
+            } else if (testType === 'reading') {
+                rules = readingRules;
+                title = 'Reading Assessment Rules';
+                buttonText = 'Start Reading Test';
+            } else if (testType === 'writing') {
+                // Writing rules - Add your writing rules here
+                rules = [
+                    {
+                        english: 'Read and understand the given topic or question. Only after understanding, you can write and express your thoughts clearly in Tamil.',
+                        tamil: 'கொடுக்கப்பட்ட தலைப்பு அல்லது கேள்வியைப் படித்து புரிந்து கொள்ளுங்கள். புரிந்து கொண்ட பிறகே, உங்கள் எண்ணங்களைத் தமிழில் தெளிவாக எழுதலாம்.'
+                    },
+                    {
+                        english: 'You can use Google Input Tools or the Tamil keyboard to type your answers.',
+                        tamil: 'உங்கள் பதில்களைத் தட்டச்சு செய்ய Google Input Tools அல்லது தமிழ் விசைப்பலகையைப் பயன்படுத்தலாம்.'
+                    },
+                    {
+                        english: 'Write in complete sentences and paragraphs in Tamil.',
+                        tamil: 'தமிழில் முழுமையான வாக்கியங்கள் மற்றும் பத்திகளில் எழுதுங்கள்.'
+                    },
+                    {
+                        english: 'Take your time to organize your thoughts before writing.',
+                        tamil: 'எழுதுவதற்கு முன் உங்கள் எண்ணங்களை ஒழுங்கமைக்க நேரம் எடுத்துக் கொள்ளுங்கள்.'
+                    },
+                    {
+                        english: 'Your writing will be evaluated on multiple criteria including grammar, vocabulary, coherence, and content.',
+                        tamil: 'உங்கள் எழுத்து இலக்கணம், சொற்களஞ்சியம், ஒருங்கிணைப்பு மற்றும் உள்ளடக்கம் உள்ளிட்ட பல அளவுகோல்களின் அடிப்படையில் மதிப்பீடு செய்யப்படும்.'
+                    }
+                ];
+                title = 'Writing Assessment Rules';
+                buttonText = 'Start Writing Test';
+            }
+
+            rulesTitle.textContent = title;
+            startTestBtn.querySelector('.btn-text').textContent = buttonText;
+
+            // Create simple list with English and Tamil together
+            rulesList.innerHTML = rules.map(rule =>
+                `<li>
+                    <div class="rule-item-wrapper">
+                        <div class="rule-english">${rule.english}</div>
+                        <div class="rule-tamil">${rule.tamil}</div>
+                    </div>
+                </li>`
+            ).join('');
+
+            rulesCard.style.display = 'block';
+        }
+
+
+        startTestBtn.addEventListener('click', function () {
+            // Fallback: if scripts didn't load, go to listening via portal URL
+            const listeningPortalUrl = 'http://127.0.0.1:5000/listening?level=1&fromFlow=1';
+            if (typeof ModuleIntegration === 'undefined' || typeof getModuleUrl === 'undefined') {
+                sessionStorage.setItem('assessmentFlowPath', window.location.href);
+                window.location.href = listeningPortalUrl;
+                return;
+            }
+            // Check if module is enabled
+            if (!isModuleEnabled(currentTest)) {
+                const moduleConfig = getModuleConfig(currentTest);
+                alert(`${moduleConfig?.name || currentTest} module is not enabled. Please enable it in modules-config.js`);
+                return;
+            }
+            // Store the path to return to assessment flow
+            sessionStorage.setItem('assessmentFlowPath', window.location.href);
+            // Special handling for listening module (needs level parameter)
+            if (currentTest === 'listening') {
+                const testStartTime = Date.now();
+                const testTimeLimit = 15 * 60 * 1000; // 15 minutes
+                const testEndTime = testStartTime + testTimeLimit;
+                localStorage.setItem('testStarted', 'true');
+                localStorage.setItem('testStartTime', testStartTime.toString());
+                localStorage.setItem('testEndTime', testEndTime.toString());
+                localStorage.setItem('currentTestLevel', '1');
+                const selectedLevel = sessionStorage.getItem('selectedLevel') || 'basic';
+                ModuleIntegration.navigateToModule('listening', { level: 1, assessmentLevel: selectedLevel });
+            } else {
+                ModuleIntegration.navigateToModule(currentTest, { fromFlow: true });
+            }
+        });
+
+        // Get selected level to determine which tests to show
+        function getNextTest() {
+            const selectedLevel = sessionStorage.getItem('selectedLevel') || 'basic';
+            const modules = getModulesForLevel(selectedLevel);
+
+            // Check each module in order to find the first incomplete one
+            for (let i = 0; i < modules.length; i++) {
+                const moduleName = modules[i];
+                const moduleConfig = getModuleConfig(moduleName);
+
+                if (!moduleConfig || !moduleConfig.enabled) {
+                    continue; // Skip disabled modules
+                }
+
+                const isCompleted = sessionStorage.getItem(moduleConfig.sessionKey) === 'true';
+
+                if (!isCompleted) {
+                    return moduleName;
+                }
+            }
+
+            return null; // All tests completed
+        }
+
+        // Check URL parameters for completion
+        const urlParams = new URLSearchParams(window.location.search);
+        const listeningDone = urlParams.get('listeningDone');
+        const speakingDone = urlParams.get('speakingDone');
+        const readingDone = urlParams.get('readingDone');
+
+        // Check if returning from a test
+        window.addEventListener('load', function () {
+            if (listeningDone === 'true') {
+                sessionStorage.setItem('listeningCompleted', 'true');
+                // Try to get results
+                try {
+                    const listeningData = localStorage.getItem('listeningResults') || sessionStorage.getItem('listeningResults');
+                    if (listeningData) {
+                        listeningResults = JSON.parse(listeningData);
+                    }
+                } catch (e) {
+                    console.log('Could not parse listening results');
+                }
+                // Continue to next test
+                const nextTest = getNextTest();
+                if (nextTest) {
+                    showRules(nextTest);
+                } else {
+                    showCombinedResults();
+                }
+                return;
+            }
+
+            if (speakingDone === 'true') {
+                sessionStorage.setItem('speakingCompleted', 'true');
+                // Try to get results
+                try {
+                    const speakingData = localStorage.getItem('speakingResults') || sessionStorage.getItem('speakingResults');
+                    if (speakingData) {
+                        speakingResults = JSON.parse(speakingData);
+                    }
+                } catch (e) {
+                    console.log('Could not parse speaking results');
+                }
+                // Continue to next test
+                const nextTest = getNextTest();
+                if (nextTest) {
+                    showRules(nextTest);
+                } else {
+                    showCombinedResults();
+                }
+                return;
+            }
+
+            if (readingDone === 'true') {
+                sessionStorage.setItem('readingCompleted', 'true');
+                // Try to get results
+                try {
+                    const readingData = localStorage.getItem('readingResults') || sessionStorage.getItem('readingResults');
+                    if (readingData) {
+                        readingResults = JSON.parse(readingData);
+                    }
+                } catch (e) {
+                    console.log('Could not parse reading results');
+                }
+                // Check if all tests are completed
+                const nextTest = getNextTest();
+                if (nextTest) {
+                    showRules(nextTest);
+                } else {
+                    showCombinedResults();
+                }
+                return;
+            }
+
+            const writingDone = urlParams.get('writingDone');
+            if (writingDone === 'true') {
+                sessionStorage.setItem('writingCompleted', 'true');
+                // Try to get results
+                try {
+                    const writingData = localStorage.getItem('writingResults') || sessionStorage.getItem('writingResults');
+                    if (writingData) {
+                        writingResults = JSON.parse(writingData);
+                    }
+                } catch (e) {
+                    console.log('Could not parse writing results');
+                }
+                // All tests completed, show results
+                showCombinedResults();
+                return;
+            }
+
+            // Check current progress and show appropriate rules
+            const nextTest = getNextTest();
+            if (nextTest) {
+                showRules(nextTest);
+            } else {
+                // If no test is in progress and no URL params, start with listening
+                const listeningCompleted = sessionStorage.getItem('listeningCompleted') === 'true';
+                const speakingCompleted = sessionStorage.getItem('speakingCompleted') === 'true';
+                const readingCompleted = sessionStorage.getItem('readingCompleted') === 'true';
+
+                if (listeningCompleted && speakingCompleted && readingCompleted) {
+                    showCombinedResults();
+                } else {
+                    // Start with listening rules if no test has been completed
+                    showRules('listening');
+                }
+            }
+        });
+
+        function showCombinedResults() {
+            const selectedLevel = sessionStorage.getItem('selectedLevel') || 'basic';
+            let listeningHTML = '<p style="color: #4a5568; line-height: 1.8; font-size: 1rem;">Listening test completed. Results will be displayed here.</p>';
+            let speakingHTML = '<p style="color: #4a5568; line-height: 1.8; font-size: 1rem;">Speaking test completed. Results will be displayed here.</p>';
+            let readingHTML = '<p style="color: #4a5568; line-height: 1.8; font-size: 1rem;">Reading test completed. Results will be displayed here.</p>';
+            let writingHTML = '<p style="color: #4a5568; line-height: 1.8; font-size: 1rem;">Writing test completed. Results will be displayed here.</p>';
+
+            // Try to get results from localStorage/sessionStorage
+            try {
+                const listeningData = localStorage.getItem('listeningResults') || sessionStorage.getItem('listeningResults');
+                const speakingData = localStorage.getItem('speakingResults') || sessionStorage.getItem('speakingResults');
+                const readingData = localStorage.getItem('readingResults') || sessionStorage.getItem('readingResults');
+                const writingData = localStorage.getItem('writingResults') || sessionStorage.getItem('writingResults');
+
+                if (listeningData) {
+                    const results = JSON.parse(listeningData);
+                    listeningHTML = formatListeningResults(results);
+                }
+
+                if (speakingData) {
+                    const results = JSON.parse(speakingData);
+                    speakingHTML = formatSpeakingResults(results);
+                }
+
+                if (readingData) {
+                    const results = JSON.parse(readingData);
+                    readingHTML = formatReadingResults(results);
+                }
+
+                if (writingData) {
+                    const results = JSON.parse(writingData);
+                    writingHTML = formatWritingResults(results);
+                }
+            } catch (e) {
+                console.log('Error parsing results:', e);
+            }
+
+            // Build results HTML based on level
+            let resultsHTML = '<h2 class="rules-title">Assessment Results</h2>';
+
+            // Add level indicator
+            const levelNames = {
+                'basic': 'Basic Level',
+                'intermediate': 'Intermediate Level',
+                'advanced': 'Advanced Level'
+            };
+            const levelName = levelNames[selectedLevel] || 'Assessment';
+            resultsHTML += `<p style="text-align: center; color: #4a5568; font-size: 1.1rem; margin-bottom: 40px; font-weight: 500;">${levelName} - Complete Assessment Results</p>`;
+
+            resultsHTML += '<div style="margin-bottom: 40px;">';
+
+            // Basic Level: Show Listening + Speaking (2 tests)
+            if (selectedLevel === 'basic') {
+                resultsHTML += `
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">1. Listening Assessment</h3>
+                    <div id="listeningResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${listeningHTML}
+                    </div>
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">2. Speaking Assessment</h3>
+                    <div id="speakingResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${speakingHTML}
+                    </div>
+                `;
+            }
+
+            // Intermediate Level: Show Listening + Speaking + Reading (3 tests)
+            else if (selectedLevel === 'intermediate') {
+                resultsHTML += `
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">1. Listening Assessment</h3>
+                    <div id="listeningResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${listeningHTML}
+                    </div>
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">2. Speaking Assessment</h3>
+                    <div id="speakingResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${speakingHTML}
+                    </div>
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">3. Reading Assessment</h3>
+                    <div id="readingResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${readingHTML}
+                    </div>
+                `;
+            }
+
+            // Advanced Level: Show Listening + Speaking + Reading + Writing (4 tests)
+            else if (selectedLevel === 'advanced') {
+                resultsHTML += `
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">1. Listening Assessment</h3>
+                    <div id="listeningResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${listeningHTML}
+                    </div>
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">2. Speaking Assessment</h3>
+                    <div id="speakingResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${speakingHTML}
+                    </div>
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">3. Reading Assessment</h3>
+                    <div id="readingResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${readingHTML}
+                    </div>
+                    <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.01em;">4. Writing Assessment</h3>
+                    <div id="writingResults" style="margin-bottom: 40px; padding: 24px; background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                        ${writingHTML}
+                    </div>
+                `;
+            }
+
+            resultsHTML += '</div>';
+            resultsHTML += `
+                <div id="aiTeacherSection" style="margin-top: 60px; text-align: center; border-top: 2px dashed rgba(13, 110, 253, 0.2); padding-top: 60px;">
+                    <div class="ai-teacher-avatar">👨‍🏫</div>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 20px; letter-spacing: -0.03em;">Detailed AI Teacher Report</h2>
+                    <div id="aiReportContainer" style="text-align: left; margin-top: 20px;">
+                        <div class="ai-report-card">
+                            <div class="loading-ai">
+                                <div class="spinner-ai"></div>
+                                <p>Our Teacher Agent is reviewing your performance across all 4 modules in detail...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; text-align: center;">
+                    <button class="start-test-btn" onclick="window.location.href='index.html'">
+                        <span class="btn-text">Back to Home</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            `;
+
+            rulesCard.innerHTML = resultsHTML;
+
+            // Auto-trigger analysis
+            setTimeout(generateTeacherAnalysis, 500);
+        }
+
+        async function generateTeacherAnalysis() {
+            const container = document.getElementById('aiReportContainer');
+            if (!container) return;
+
+            container.style.display = 'block';
+
+            try {
+                const reportMarkdown = await window.teacherAgent.generateReport();
+                const renderedHTML = marked.parse(reportMarkdown);
+
+                container.innerHTML = `
+                    <div class="ai-report-card" id="finalAIReport">
+                        <div class="ai-report-content">
+                            ${renderedHTML}
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="ai-report-card" style="border-color: #dc3545;">
+                        <p style="color: #dc3545;"><strong>Error generating report:</strong> ${error.message}</p>
+                        <button onclick="generateTeacherAnalysis()" class="ai-btn-primary" style="background: #6c757d; border: none; font-family: inherit; border-radius: 8px; padding: 10px 20px;">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+
+
+        function formatListeningResults(results) {
+            if (!results || typeof results !== 'object') {
+                return '<p style="color: #4a5568; line-height: 1.8; font-size: 1rem;">Listening test completed successfully.</p>';
+            }
+
+            let html = '<div style="color: #4a5568;">';
+            if (results.score !== undefined) {
+                html += `<p style="font-size: 1.125rem; margin-bottom: 12px; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Score:</strong> ${results.score}</p>`;
+            }
+            if (results.percentage !== undefined) {
+                html += `<p style="font-size: 1.125rem; margin-bottom: 12px; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Percentage:</strong> ${results.percentage}%</p>`;
+            }
+            if (results.status) {
+                html += `<p style="font-size: 1rem; margin-bottom: 0; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Status:</strong> ${results.status}</p>`;
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function formatSpeakingResults(results) {
+            if (!results || typeof results !== 'object') {
+                return '<p style="color: #4a5568; line-height: 1.8; font-size: 1rem;">Speaking test completed successfully.</p>';
+            }
+
+            let html = '<div style="color: #4a5568;">';
+            if (results.avgOverall !== undefined) {
+                html += `<p style="font-size: 1.125rem; margin-bottom: 12px; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Average Score:</strong> ${results.avgOverall.toFixed(1)}%</p>`;
+            }
+            if (results.totalScore !== undefined) {
+                html += `<p style="font-size: 1rem; margin-bottom: 12px; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Questions Passed:</strong> ${results.totalScore}</p>`;
+            }
+            if (results.status) {
+                html += `<p style="font-size: 1rem; margin-bottom: 0; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Status:</strong> ${results.status}</p>`;
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function formatReadingResults(results) {
+            if (!results || typeof results !== 'object') {
+                return '<p style="color: #4a5568; line-height: 1.8; font-size: 1rem;">Reading test completed successfully.</p>';
+            }
+
+            let html = '<div style="color: #4a5568;">';
+            if (results.percentage !== undefined) {
+                html += `<p style="font-size: 1.125rem; margin-bottom: 12px; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Percentage:</strong> ${results.percentage}%</p>`;
+            }
+            if (results.marks !== undefined) {
+                html += `<p style="font-size: 1rem; margin-bottom: 12px; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Marks:</strong> ${results.marks}</p>`;
+            }
+            if (results.status) {
+                html += `<p style="font-size: 1rem; margin-bottom: 0; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Status:</strong> ${results.status}</p>`;
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function formatWritingResults(results) {
+            if (!results || typeof results !== 'object') {
+                return '<p style="color: #4a5568; line-height: 1.8; font-size: 1rem;">Writing test completed successfully.</p>';
+            }
+
+            let html = '<div style="color: #4a5568;">';
+            if (results.score !== undefined) {
+                html += `<p style="font-size: 1.125rem; margin-bottom: 12px; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Score:</strong> ${results.score}</p>`;
+            }
+            if (results.percentage !== undefined) {
+                html += `<p style="font-size: 1.125rem; margin-bottom: 12px; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Percentage:</strong> ${results.percentage}%</p>`;
+            }
+            if (results.status) {
+                html += `<p style="font-size: 1rem; margin-bottom: 0; line-height: 1.6;"><strong style="color: #1a1a1a; font-weight: 600;">Status:</strong> ${results.status}</p>`;
+            }
+            html += '</div>';
+            return html;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,353 @@
+/* Back Button - Premium Minimalist */
+.back-button {
+    position: fixed;
+    top: 110px;
+    left: 30px;
+    width: 52px;
+    height: 52px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    transform: translateY(-2px);
+    background: #f8f9fa;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button svg {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.back-button:hover svg {
+    transform: scale(1.1);
+}
+
+/* Selection Container - Full Screen - Premium Minimalist */
+.selection-container {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 120px 60px 80px;
+    position: relative;
+    z-index: 10;
+    animation: fadeInUp 0.8s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: #ffffff;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Assessment Sequence - Premium Minimalist */
+.assessment-sequence {
+    width: 100%;
+    max-width: 1200px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 60px 50px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.sequence-info {
+    margin-bottom: 40px;
+}
+
+.sequence-intro {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    color: #000000;
+    text-align: center;
+    margin-bottom: 50px;
+    line-height: 1.5;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.sequence-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+    margin: 0 auto;
+}
+
+.sequence-step {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    animation: slideIn 0.6s ease-out backwards;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sequence-step:last-of-type {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.sequence-step:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+.sequence-step[data-step="1"] { animation-delay: 0.1s; }
+.sequence-step[data-step="2"] { animation-delay: 0.2s; }
+.sequence-step[data-step="3"] { animation-delay: 0.3s; }
+.sequence-step[data-step="4"] { animation-delay: 0.4s; }
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.step-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background: #f8f9fa;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #000000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.sequence-step:hover .step-number {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.15);
+    background: #f0f0f0;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+}
+
+.step-content p {
+    font-size: clamp(1rem, 1.6vw, 1.1rem);
+    color: #666666;
+    margin: 0 0 12px 0;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.step-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #4a4a4a;
+    margin-top: 8px;
+}
+
+.sequence-arrow {
+    font-size: 1.8rem;
+    color: #999999;
+    opacity: 0.6;
+    margin: 8px 0;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.start-button-container {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    width: 100%;
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.start-first-assessment-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    background: #000000;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.start-first-assessment-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    background: #1a1a1a;
+}
+
+.start-first-assessment-btn:active {
+    transform: translateY(0);
+}
+
+.start-first-assessment-btn svg {
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
+}
+
+.start-first-assessment-btn:hover svg {
+    transform: translateX(4px);
+}
+
+.btn-text {
+    position: relative;
+    z-index: 1;
+}
+
+.button-hint {
+    font-size: 0.9rem;
+    color: #666666;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .back-button {
+        top: 100px;
+        left: 20px;
+        width: 46px;
+        height: 46px;
+    }
+
+    .selection-container {
+        padding: 100px 20px 60px;
+    }
+
+    .assessment-sequence {
+        padding: 40px 30px;
+    }
+
+    .sequence-step {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 25px 20px;
+    }
+
+    .step-icon-wrapper {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .sequence-arrow {
+        margin: 10px 0;
+        font-size: 1.5rem;
+    }
+
+    .start-first-assessment-btn {
+        padding: 14px 28px;
+        font-size: 0.95rem;
+    }
+
+    .step-content h3 {
+        font-size: 1.3rem;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .assessment-sequence {
+        padding: 30px 20px;
+    }
+
+    .sequence-intro {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+    .step-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .step-content p {
+        font-size: 0.95rem;
+    }
+
+    .step-number {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+}

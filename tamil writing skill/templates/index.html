@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil Writing Skill Assessment - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Exam Header (Tamil title + English subtitle, like reading module) -->
+    <div class="writing-exam-header">
+        <div class="exam-header-content">
+            <div class="exam-title">
+                <h1>தமிழ் எழுத்து திறன் மதிப்பீடு</h1>
+                <h2>Tamil Writing Skill Assessment</h2>
+            </div>
+            <div class="exam-info">
+                <div class="nav-icons">
+                    <a href="/" class="nav-icon" title="Dashboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Selection Container -->
+    <div class="level-selection-container">
+        <div class="level-selection-content">
+            <h1 class="level-selection-title">Choose Your Assessment Level</h1>
+            <p class="level-selection-subtitle">Select the level that best matches your Tamil writing proficiency</p>
+
+            <div class="level-cards">
+                <!-- Level 1: Basic -->
+                <a href="/level1" class="level-card" data-level="1">
+                    <div class="level-card-header">
+                        <div class="level-badge basic-badge">Basic</div>
+                        <h2 class="level-name">Level 1</h2>
+                    </div>
+                    <div class="level-assessments">
+                        <div class="assessment-item">
+                            <span class="assessment-name">Write about yourself</span>
+                        </div>
+                    </div>
+                    <p class="level-description">Formulate 5 simple lines describing yourself, your family, or your
+                        interests.</p>
+                    <div class="select-level-btn">Start Level 1</div>
+                </a>
+
+                <!-- Level 2: Intermediate -->
+                <a href="/level2" class="level-card" id="level-2-card" data-level="2">
+                    <div class="level-card-header">
+                        <div class="level-badge intermediate-badge" id="level-2-badge">Intermediate</div>
+                        <h2 class="level-name">Level 2</h2>
+                    </div>
+                    <div class="level-assessments">
+                        <div class="assessment-item">
+                            <span class="assessment-name">Protection of Nature</span>
+                        </div>
+                    </div>
+                    <p class="level-description">Write about the importance of protecting nature and the environment.
+                    </p>
+                    <div class="select-level-btn">Start Level 2</div>
+                </a>
+
+                <!-- Level 3: Advanced -->
+                <a href="/level3" class="level-card" id="level-3-card" data-level="3">
+                    <div class="level-card-header">
+                        <div class="level-badge advanced-badge" id="level-3-badge">Advanced</div>
+                        <h2 class="level-name">Level 3</h2>
+                    </div>
+                    <div class="level-assessments">
+                        <div class="assessment-item">
+                            <span class="assessment-name">Importance of Education</span>
+                        </div>
+                    </div>
+                    <p class="level-description">Explain why education is very important for individuals and society.
+                    </p>
+                    <div class="select-level-btn">Start Level 3</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/unlock.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.LevelManager) {
+                LevelManager.updateDashboardUI();
+            }
+        });
+    </script>
+</body>
+
+</html>

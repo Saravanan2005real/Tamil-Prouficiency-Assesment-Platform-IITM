@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ta" data-page="reading">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>தமிழ் வாசிப்பு திறன் மதிப்பீடு / Tamil Reading Skill Assessment</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- External Libraries for AI Assessment Analysis -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Custom AI Teacher Agent -->
+    <script src="teacher-agent.js"></script>
+
+    <script>
+        // Check if this is the rules page - if so, show instructions
+        if (window.location.pathname === '/' || window.location.pathname === '/rules') {
+            document.body.dataset.page = 'rules';
+        }
+    </script>
+</head>
+
+<body data-page="reading">
+    <!-- HEADER -->
+    <div class="exam-header">
+        <div class="exam-header-content">
+            <div class="exam-title">
+                <h1>தமிழ் வாசிப்பு திறன் மதிப்பீடு</h1>
+                <h2>Tamil Reading Skill Assessment</h2>
+            </div>
+            <div class="exam-info">
+                <div class="info-item">
+                    <span class="info-label">Time Remaining:</span>
+                    <div id="global-timer" class="timer-display">30:00</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Levels:</span>
+                    <div class="level-buttons">
+                        <button data-level="1" class="level-btn active" id="level-1-btn">Level 1</button>
+                        <button data-level="2" class="level-btn" id="level-2-btn">Level 2</button>
+                        <button data-level="3" class="level-btn" id="level-3-btn">Level 3</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT LAYOUT -->
+    <div class="exam-container">
+        <!-- PASSAGE SECTION (left) -->
+        <div class="content-section" id="passage-section">
+            <div class="section-header">
+                <h2>பகுதி / Passage</h2>
+            </div>
+            <div class="passage-box" id="passage-box">
+                <p style="color: #666; padding: 20px; text-align: center;">Loading passage...</p>
+            </div>
+        </div>
+
+        <!-- QUESTIONS SECTION (right) -->
+        <div class="content-section" id="questions-section">
+            <div class="section-header">
+                <h2>கேள்விகள் / Questions</h2>
+            </div>
+            <form id="answer-form">
+                <div class="questions-container" id="questions-container">
+                    <p style="color: #666; padding: 20px; text-align: center;">Loading questions...</p>
+                </div>
+                <div class="section-footer questions-footer">
+                    <button type="button" class="btn-primary" id="next-btn" style="display:none;">
+                        Next Level
+                    </button>
+                    <button type="button" class="btn-primary" id="submit-btn" style="display:none;">
+                        Submit All Answers
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- RESULT AREA (below, full width) -->
+    <div class="result-wrapper" id="result-card" style="display:none;">
+        <div class="result-inner">
+            <h2>Results</h2>
+            <div id="result-summary"></div>
+            <div id="result-details"></div>
+
+            <!-- AI Teacher Analysis Section -->
+            <div id="aiTeacherSection"
+                style="margin-top: 40px; text-align: center; border-top: 2px dashed rgba(13, 110, 253, 0.2); padding-top: 40px; display: none;">
+                <div style="font-size: 3rem; margin-bottom: 5px;">👨‍🏫</div>
+                <h2 style="font-size: 1.8rem; margin-bottom: 15px; color: #1a1a1a;">Detailed AI Teacher Report</h2>
+                <div id="aiReportContainer" style="text-align: left; margin-top: 20px;">
+                    <div class="ai-report-card">
+                        <div class="loading-ai">
+                            <div class="spinner-ai"></div>
+                            <p>Our Teacher Agent is reviewing your reading performance in detail...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <button class="btn-primary" onclick="location.reload()"
+                    style="background: #6c757d; border-color: #6c757d;">Restart Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="tamil-keyboard.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
