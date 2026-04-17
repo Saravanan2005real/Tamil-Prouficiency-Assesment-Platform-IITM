@@ -4,11 +4,16 @@
 
 ```mermaid
 graph TD
-    Mic[Microphone Input] --> Buff[Audio Buffer Processing]
-    Buff --> W2V[Wav2Vec 2.0 Model]
-    W2V --> Phoneme[Phoneme Mapping]
-    Phoneme --> Match[Reference Signal Alignment]
-    Match --> Pron[Pronunciation Score]
+    Audio[Audio Input] --> Whisper[Whisper STT - Tamil]
+    Whisper --> Transcript[Tamil Transcript]
+    Transcript --> Gate[Step 4: Readiness Gate]
+    Gate --> Rel[Ollama Relevance Check]
+    Gate --> Suff[Sufficiency & Word Count]
+    Rel & Suff --> Skill[Step 5: Skill Assessment]
+    Skill --> A[Fluency & Pronunciation - Acoustic]
+    Skill --> B[Lexical & Coherence - LLM]
+    Skill --> C[Confidence - Statistical]
+    A & B & C --> Final[Weighted Overall Score]
 ```
 
 ## Overview

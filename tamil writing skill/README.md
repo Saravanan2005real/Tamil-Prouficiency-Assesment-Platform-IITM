@@ -4,12 +4,15 @@
 
 ```mermaid
 graph TD
-    Canvas[Handwriting Digital Canvas] --> Raster[Image Processing]
-    Raster --> OCR[CRNN + CTC / ResNet OCR]
-    OCR --> Text[Tamil Text Extraction]
-    Text --> Lexicon[Lexicon & Spell Checker]
-    Lexicon --> Grammar[Grammar Validation Engine]
-    Grammar --> FinalScore[Writing Proficiency Score]
+    Input[Handwritten/Typed Tamil] --> Clean[Text Normalizer]
+    Clean --> Relevance{Topic Relevance Gate}
+    Relevance --> LLM[Ollama - Llama 3.2]
+    Clean --> Linguistic{Linguistic Detectors}
+    Linguistic --> Spell[Tamil Spell Checker]
+    Linguistic --> Vocab[Ollama Vocab Detector]
+    Linguistic --> Grammar[Grammar Rule Engine]
+    LLM & Spell & Vocab & Grammar --> Scoring[Weighted Score Aggregation]
+    Scoring --> Threshold{Pass/Fail Gate - 50%}
 ```
 
 A comprehensive web application for evaluating Tamil writing proficiency across three levels. The system checks for spelling, vocabulary usage, grammar correctness, and topic relevance.

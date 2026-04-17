@@ -7,12 +7,14 @@ A comprehensive Tamil reading comprehension assessment engine powered by Transfo
 ## 🏗️ Module Architecture
 
 ```mermaid
-graph LR
-    Input[Tamil Answer Input] --> BERT[Tamil-BERT-Base Engine]
-    BERT --> Semantic[Semantic Similarity Score]
-    BERT --> Logic[Logic & Contradiction Check]
-    Semantic & Logic --> Teacher[AI Teacher Evaluation]
-    Teacher --> Result[Final Reading Score]
+graph TD
+    User[Student Answer - Tamil] --> Gate[Input Normalization]
+    Passage[Context Passage] & Question[Level Question] & User --> Groq[Groq API - Llama 3.3-70B]
+    Groq --> Analysis{Semantic Analysis}
+    Analysis --> Valid[Core Meaning Validation]
+    Analysis --> Logic[Logic & Contradiction Check]
+    Valid & Logic --> Output[JSON Response: Score, Feedback, Reasoning]
+    Output --> Synthesis[Integrated Teacher Report Generator]
 ```
 
 ## Features

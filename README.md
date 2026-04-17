@@ -32,9 +32,9 @@ graph TD
     subgraph ILE [Layer 3: Intelligent Linguistic Engine]
         direction TB
         E[Tamil BERT-NP - Reading]
-        F[CRNN + CTC - Writing]
-        G[Wav2Vec 2.0 - Speaking]
-        H[Formant Analyzer - Listening]
+        F[OCR & Linguistic Detectors - Writing]
+        G[Whisper & Wav2Vec 2.0 - Speaking]
+        H[Standardized Evaluators - Listening]
         I[AI TEACHER AGENT - Convolutional Reasoning]
     end
 
@@ -56,59 +56,72 @@ graph TD
 
 ---
 
-## 🧩 Core Modules & Architecture
+## 🧩 Module-Specific Architectures
 
-### 1. 📖 Reading Skill Module
-Evaluates comprehension through semantic similarity and syntactic accuracy using transformer-based models.
-
-**Architecture:**
-```mermaid
-graph LR
-    Input[Tamil Answer Input] --> BERT[Tamil-BERT-Base Engine]
-    BERT --> Semantic[Semantic Similarity Score]
-    BERT --> Logic[Logic & Contradiction Check]
-    Semantic & Logic --> Teacher[AI Teacher Evaluation]
-    Teacher --> Result[Final Reading Score]
-```
-
-### 2. ✍️ Writing Skill Module
-Uses advanced OCR and Linguistic validation to score handwritten Tamil input.
+### 1. 📖 Reading Skill Module (LLM-Optimized)
+Evaluates comprehension through deep semantic analysis using ultra-high-parameter models.
 
 **Architecture:**
 ```mermaid
 graph TD
-    Canvas[Handwriting Digital Canvas] --> Raster[Image Processing]
-    Raster --> OCR[CRNN + CTC / ResNet OCR]
-    OCR --> Text[Tamil Text Extraction]
-    Text --> Lexicon[Lexicon & Spell Checker]
-    Lexicon --> Grammar[Grammar Validation Engine]
-    Grammar --> FinalScore[Writing Proficiency Score]
+    User[Student Answer - Tamil] --> Gate[Input Normalization]
+    Passage[Context Passage] & Question[Level Question] & User --> Groq[Groq API - Llama 3.3-70B]
+    Groq --> Analysis{Semantic Analysis}
+    Analysis --> Valid[Core Meaning Validation]
+    Analysis --> Logic[Logic & Contradiction Check]
+    Valid & Logic --> Output[JSON Response: Score, Feedback, Reasoning]
+    Output --> Synthesis[Integrated Teacher Report Generator]
 ```
 
-### 3. 🗣️ Speaking Skill Module
-Leverages fine-tuned acoustic models to assess pronunciation, fluency, and phoneme accuracy.
+### 2. ✍️ Writing Skill Module (Hybrid Evaluation)
+Uses a combination of local linguistic rules and LLM content analysis to score handwritten or typed Tamil.
 
 **Architecture:**
 ```mermaid
 graph TD
-    Mic[Microphone Input] --> Buff[Audio Buffer Processing]
-    Buff --> W2V[Wav2Vec 2.0 Model]
-    W2V --> Phoneme[Phoneme Mapping]
-    Phoneme --> Match[Reference Signal Alignment]
-    Match --> Pron[Pronunciation Score]
+    Input[Handwritten/Typed Tamil] --> Clean[Text Normalizer]
+    Clean --> Relevance{Topic Relevance Gate}
+    Relevance --> LLM[Ollama - Llama 3.2]
+    Clean --> Linguistic{Linguistic Detectors}
+    Linguistic --> Spell[Tamil Spell Checker]
+    Linguistic --> Vocab[Ollama Vocab Detector]
+    Linguistic --> Grammar[Grammar Rule Engine]
+    LLM & Spell & Vocab & Grammar --> Scoring[Weighted Score Aggregation]
+    Scoring --> Threshold{Pass/Fail Gate - 50%}
 ```
 
-### 4. 👂 Listening Skill Module
-Focuses on phonetic comprehension and audio-visual correlation.
+### 3. 🗣️ Speaking Skill Module (Two-Step Assessment)
+Leverages a robust multi-stage pipeline to evaluate both the validity of the response and the quality of speech.
 
 **Architecture:**
 ```mermaid
 graph TD
-    Playback[Stimulus Audio Playback] --> User[User Interaction]
-    User --> Comp[Comprehension Challenge]
-    Comp --> Phonetic[Phonetic Accuracy Engine]
-    Phonetic --> Formant[Formant Analysis]
-    Formant --> Report[Detailed Listening Report]
+    Audio[Audio Input] --> Whisper[Whisper STT - Tamil]
+    Whisper --> Transcript[Tamil Transcript]
+    Transcript --> Gate[Step 4: Readiness Gate]
+    Gate --> Rel[Ollama Relevance Check]
+    Gate --> Suff[Sufficiency & Word Count]
+    Rel & Suff --> Skill[Step 5: Skill Assessment]
+    Skill --> A[Fluency & Pronunciation - Acoustic]
+    Skill --> B[Lexical & Coherence - LLM]
+    Skill --> C[Confidence - Statistical]
+    A & B & C --> Final[Weighted Overall Score]
+```
+
+### 4. 👂 Listening Skill Module (Multi-Metric Diagnostic)
+Focuses on standardized correctness across multiple linguistic dimensions.
+
+**Architecture:**
+```mermaid
+graph TD
+    Playback[Audio Stimulus] --> User[User Response]
+    User --> Eval[Standardized Evaluator]
+    Eval --> Acc[Accuracy Module: MCQ/Matching]
+    Eval --> Pre[Precision Module: Exact Order]
+    Eval --> Rel[Relevance Module: Semantic Similarity]
+    Rel --> LLM[Ollama - Semantic Embedding]
+    Acc & Pre & Rel --> Diagn[Learner Level Diagnosis]
+    Diagn --> Skill[Beginner / Intermediate / Pro]
 ```
 
 ---
@@ -125,10 +138,10 @@ graph TD
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
 | **Frontend** | React, HTML5 Canvas, TailwindCSS | User interface and multimodal capture. |
-| **API Layer** | FastAPI, Node.js | Service orchestration and scoring consolidation. |
-| **NLP Engine** | Tamil BERT, Ollama (Llama 3) | Semantic analysis and grammar detection. |
-| **Vision Engine** | PyTorch, CRNN, CTC Loss | Handwritten Tamil script recognition (OCR). |
-| **Audio Engine** | Wav2Vec 2.0, Librosa | Phoneme mapping and audio feature extraction. |
+| **STT Engine** | OpenAI Whisper (Tamil) | High-accuracy speech-to-text conversion. |
+| **NLP Engine** | Llama 3.3 (Groq), Llama 3.2 (Ollama) | Semantic analysis and topic relevance. |
+| **Linguistic Logic** | Custom Python Rule Engines | Grammar, Spelling, and Vocabulary detection. |
+| **Audio Analysis** | Librosa, NumPy, Whisper Logprobs | Fluency and Pronunciation metrics. |
 | **Storage** | MongoDB, PostgreSQL | Persistence of profiles and certifications. |
 
 ---
@@ -138,26 +151,22 @@ graph TD
 ### Prerequisites
 - Python 3.9+
 - Node.js 16+
-- CUDA-enabled GPU (Highly recommended for OCR and BERT modules)
+- Ollama (running locally with `llama3.2` and `qwen2.5:3b`)
+- Groq API Key (for Reading Module)
 
 ### Installation
 
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/Saravanan2005real/Tamil-Prouficiency-Assesment-Platform-IITM.git
-   cd Tamil-Prouficiency-Assesment-Platform-IITM
    ```
 
-2. **Initialize Submodules**:
-   Each module can be run independently using the provided batch/shell scripts:
-   - **Reading Module**: `reading skill final one/run.sh`
-   - **Writing Module**: `tamil writing skill/app.py`
-   - **Speaking Module**: `speaking tamil/START_BACKEND.bat`
-
----
-
-## 📜 Documentation
-Detailed technical specifications for each layer are available in the `/docs` directory and within each module's respective README.
+2. **Module Execution**:
+   Each module can be run independently:
+   - **Reading Module**: `reading skill final one/run.sh` (Port 5003)
+   - **Writing Module**: `tamil writing skill/app.py` (Port 5000)
+   - **Speaking Module**: `speaking tamil/START_BACKEND.bat` (Port 5002)
+   - **Listening Module**: `tamil-listening-module/START_BACKEND.bat` (Port 5001)
 
 ---
 
