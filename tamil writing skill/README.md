@@ -1,4 +1,16 @@
-# Tamil Writing Proficiency Test
+# ✍️ Tamil Writing Assessment Module (OCR & Grammar)
+
+## 🏗️ Module Architecture
+
+```mermaid
+graph TD
+    Canvas[Handwriting Digital Canvas] --> Raster[Image Processing]
+    Raster --> OCR[CRNN + CTC / ResNet OCR]
+    OCR --> Text[Tamil Text Extraction]
+    Text --> Lexicon[Lexicon & Spell Checker]
+    Lexicon --> Grammar[Grammar Validation Engine]
+    Grammar --> FinalScore[Writing Proficiency Score]
+```
 
 A comprehensive web application for evaluating Tamil writing proficiency across three levels. The system checks for spelling, vocabulary usage, grammar correctness, and topic relevance.
 

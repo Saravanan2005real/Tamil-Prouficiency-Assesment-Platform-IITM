@@ -1,6 +1,19 @@
-# Tamil Reading Assessment Website
+# 📖 Tamil Reading Assessment Module
 
-A web-based Tamil reading comprehension assessment system with intelligent answer evaluation.
+![Reading Module UI](../docs/assets/reading_ui.png)
+
+A comprehensive Tamil reading comprehension assessment engine powered by Transformer models.
+
+## 🏗️ Module Architecture
+
+```mermaid
+graph LR
+    Input[Tamil Answer Input] --> BERT[Tamil-BERT-Base Engine]
+    BERT --> Semantic[Semantic Similarity Score]
+    BERT --> Logic[Logic & Contradiction Check]
+    Semantic & Logic --> Teacher[AI Teacher Evaluation]
+    Teacher --> Result[Final Reading Score]
+```
 
 ## Features
 

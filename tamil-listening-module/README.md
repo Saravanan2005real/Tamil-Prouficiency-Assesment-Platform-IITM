@@ -1,4 +1,15 @@
-# Tamil Listening Proficiency Test
+# 👂 Tamil Listening Proficiency Module
+
+## 🏗️ Module Architecture
+
+```mermaid
+graph TD
+    Playback[Stimulus Audio Playback] --> User[User Interaction]
+    User --> Comp[Comprehension Challenge]
+    Comp --> Phonetic[Phonetic Accuracy Engine]
+    Phonetic --> Formant[Formant Analysis]
+    Formant --> Report[Detailed Listening Report]
+```
 
 A comprehensive web application for testing Tamil listening proficiency across 3 levels with AI-powered evaluation.
 

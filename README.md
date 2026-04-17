@@ -1,88 +1,144 @@
-# Unified Tamil Language Proficiency (UTLAP) Platform
+# 🏆 Unified Tamil Language Proficiency (UTLAP) Platform
+
+![UTLAP Banner](docs/assets/banner.png)
 
 [![Tamil Language](https://img.shields.io/badge/Language-Tamil-blue.svg)](https://en.wikipedia.org/wiki/Tamil_language)
 [![Platform](https://img.shields.io/badge/Platform-Assessment-green.svg)](#)
-[![Tech Stack](https://img.shields.io/badge/Stack-Python%20%7C%20FastAPI%20%7C%20React-orange.svg)](#)
+[![Stack](https://img.shields.io/badge/Stack-Python%20%7C%20Node.js%7C%20AI-orange.svg)](#)
 
-A comprehensive, multimodal assessment platform designed to evaluate proficiency in the Tamil language across four core dimensions: **Listening, Speaking, Reading, and Writing**. This platform utilizes state-of-the-art AI models to provide real-time feedback and semantic scoring.
-
-## 🌟 Overview
-
-The UTLAP Platform is a unified solution for Tamil language evaluation, featuring:
-- **Multimodal Interface**: Support for speech input, digital pen handwriting, and text.
-- **Intelligent Linguistic Engine**: Powered by specialized AI models for phonetics, syntax, and semantics.
-- **Hierarchical Assessment**: Three levels of evaluation (Basic, Intermediate, Advanced).
-- **Automated Feedback**: Real-time results and "AI Teacher" feedback.
+A state-of-the-art, multimodal assessment platform designed for **IIT Madras** to evaluate proficiency in the Tamil language. The platform integrates deep learning models for speech, handwriting, and semantic text analysis to provide a comprehensive 4-dimensional evaluation.
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Overall System Architecture
 
-The project follows a 4-layer IEEE-standard architecture:
+The UTLAP platform follows a 4-layer IEEE-standard architecture, ensuring scalability, modularity, and high-performance AI orchestration.
 
 ```mermaid
 graph TD
+    %% Layer 1
     subgraph MIL [Layer 1: Multimodal Interface Layer]
         A[Officer Portal - React/Native]
         B[Admin Interface - Analytics]
         C[Input Modalities - Speech/Pen/Text]
     end
 
+    %% Layer 2
     subgraph AOL [Layer 2: Application Orchestration Layer]
         D[Assessment Orchestrator - API Gateway]
     end
 
+    %% Layer 3
     subgraph ILE [Layer 3: Intelligent Linguistic Engine]
+        direction TB
         E[Tamil BERT-NP - Reading]
         F[CRNN + CTC - Writing]
         G[Wav2Vec 2.0 - Speaking]
         H[Formant Analyzer - Listening]
-        I[AI TEACHER AGENT]
+        I[AI TEACHER AGENT - Convolutional Reasoning]
     end
 
+    %% Layer 4
     subgraph KML [Layer 4: Knowledge Management Layer]
-        J[(Question Bank)]
+        J[(Question Bank - QB)]
         K[(User Profile Store)]
         L[(Certificate Repository)]
     end
 
+    %% Connections
     MIL --> AOL
     AOL --> ILE
     ILE --> KML
+    
+    %% Internal ILE connections
+    E & F & G & H --> I
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🧩 Core Modules & Architecture
 
-| Component | Sub-system / Algorithm |
-| :--- | :--- |
-| **Frontend** | React, TailwindCSS, HTML5 Canvas |
-| **Logic Controller** | Node.js, Python (FastAPI, Flask) |
-| **NLP Core** | Tamil BERT-Base (Semantic analysis, Grammar) |
-| **Audio Engine** | Wav2Vec 2.0 (Phoneme mapping, Pronunciation) |
-| **OCR Module** | Attention-based LSTM / ResNet (Handwriting recognition) |
-| **Storage** | MongoDB, PostgreSQL |
+### 1. 📖 Reading Skill Module
+Evaluates comprehension through semantic similarity and syntactic accuracy using transformer-based models.
+
+**Architecture:**
+```mermaid
+graph LR
+    Input[Tamil Answer Input] --> BERT[Tamil-BERT-Base Engine]
+    BERT --> Semantic[Semantic Similarity Score]
+    BERT --> Logic[Logic & Contradiction Check]
+    Semantic & Logic --> Teacher[AI Teacher Evaluation]
+    Teacher --> Result[Final Reading Score]
+```
+
+### 2. ✍️ Writing Skill Module
+Uses advanced OCR and Linguistic validation to score handwritten Tamil input.
+
+**Architecture:**
+```mermaid
+graph TD
+    Canvas[Handwriting Digital Canvas] --> Raster[Image Processing]
+    Raster --> OCR[CRNN + CTC / ResNet OCR]
+    OCR --> Text[Tamil Text Extraction]
+    Text --> Lexicon[Lexicon & Spell Checker]
+    Lexicon --> Grammar[Grammar Validation Engine]
+    Grammar --> FinalScore[Writing Proficiency Score]
+```
+
+### 3. 🗣️ Speaking Skill Module
+Leverages fine-tuned acoustic models to assess pronunciation, fluency, and phoneme accuracy.
+
+**Architecture:**
+```mermaid
+graph TD
+    Mic[Microphone Input] --> Buff[Audio Buffer Processing]
+    Buff --> W2V[Wav2Vec 2.0 Model]
+    W2V --> Phoneme[Phoneme Mapping]
+    Phoneme --> Match[Reference Signal Alignment]
+    Match --> Pron[Pronunciation Score]
+```
+
+### 4. 👂 Listening Skill Module
+Focuses on phonetic comprehension and audio-visual correlation.
+
+**Architecture:**
+```mermaid
+graph TD
+    Playback[Stimulus Audio Playback] --> User[User Interaction]
+    User --> Comp[Comprehension Challenge]
+    Comp --> Phonetic[Phonetic Accuracy Engine]
+    Phonetic --> Formant[Formant Analysis]
+    Formant --> Report[Detailed Listening Report]
+```
 
 ---
 
-## 📂 Project Structure
+## 🖥️ Visual Preview
 
-- `/frontend`: Main application UI and module integration logic.
-- `/reading skill final one`: Reading assessment module (Flask-based).
-- `/tamil writing skill`: Writing assessment module (OCR/Handwriting).
-- `/speaking tamil`: Speaking assessment module (Audio analysis).
-- `/speaking hindi`: (Parallel Hindi assessment module).
-- `/tamil-listening-module`: Listening assessment module (Phonetics).
+![Dashboard Mockup](docs/assets/dashboard.png)
+*Figure 1: Unified Assessment Dashboard Mockup*
+
+---
+
+## 🛠️ Technological Stack
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend** | React, HTML5 Canvas, TailwindCSS | User interface and multimodal capture. |
+| **API Layer** | FastAPI, Node.js | Service orchestration and scoring consolidation. |
+| **NLP Engine** | Tamil BERT, Ollama (Llama 3) | Semantic analysis and grammar detection. |
+| **Vision Engine** | PyTorch, CRNN, CTC Loss | Handwritten Tamil script recognition (OCR). |
+| **Audio Engine** | Wav2Vec 2.0, Librosa | Phoneme mapping and audio feature extraction. |
+| **Storage** | MongoDB, PostgreSQL | Persistence of profiles and certifications. |
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.8+
-- Node.js & npm
-- Git
+- Python 3.9+
+- Node.js 16+
+- CUDA-enabled GPU (Highly recommended for OCR and BERT modules)
 
 ### Installation
 
@@ -92,49 +148,16 @@ graph TD
    cd Tamil-Prouficiency-Assesment-Platform-IITM
    ```
 
-2. **Configure Modules**:
-   The platform uses a centralized configuration in `/frontend/modules-config.js`. Update the `baseUrl` or individual module URLs as needed.
-
-3. **Run Modules**:
-   Each module can be started independently:
-   - **Reading Module**: `cd "reading skill final one" && bash run.sh`
-   - **Writing Module**: `cd "tamil writing skill" && python app.py`
-   - **Speaking Module**: `cd "speaking tamil" && ./START_BACKEND.bat`
+2. **Initialize Submodules**:
+   Each module can be run independently using the provided batch/shell scripts:
+   - **Reading Module**: `reading skill final one/run.sh`
+   - **Writing Module**: `tamil writing skill/app.py`
+   - **Speaking Module**: `speaking tamil/START_BACKEND.bat`
 
 ---
 
-## 📝 Configuration
-
-All module URLs and settings are centralized in `frontend/modules-config.js`. You can easily switch between local and production servers by modifying the `baseUrl`.
-
-```javascript
-// Example Configuration
-const modulesConfig = {
-    baseUrl: 'http://localhost:5000',
-    modules: {
-        listening: { enabled: true, ... },
-        speaking: { enabled: true, ... },
-        // ...
-    }
-};
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-1. Fork the project.
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+## 📜 Documentation
+Detailed technical specifications for each layer are available in the `/docs` directory and within each module's respective README.
 
 ---
 
